@@ -1,0 +1,25 @@
+.img-responsive {
+  display: block;
+  max-width: $width;
+  height: auto;
+  @media screen and (max-width: $third-breakpoint) {
+    margin: auto;
+    margin-top: 15px;
+  }
+}
+
+.img-responsive__portfolio {
+  @extend .shadow--faded;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+}
+
+.img-responsive__portfolio--hover:hover {
+  @extend .shadow;
+  transform: translateY(-8px);
+  transition: transform 200ms, box-shadow 200ms;
+  transition-property: transform, box-shadow;
+  transition-duration: 200ms, 200ms;
+  transition-timing-function: initial, initial;
+  transition-delay: initial, initial;
+}

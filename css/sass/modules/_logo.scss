@@ -1,0 +1,9 @@
+.header {
+  &__logo {
+  max-height: 100px;
+  margin-top: 15px;
+    &--circle{
+      border-radius: 50%;
+    }
+  }
+}

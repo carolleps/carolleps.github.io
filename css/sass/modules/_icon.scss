@@ -1,0 +1,10 @@
+@import url(http://weloveiconfonts.com/api/?family=brandico);
+
+[class*="brandico-"]:before {
+  font-family: "brandico", sans-serif;
+  color: black;
+  display: inline-block;
+  text-shadow: 3px 3px 3px #aaa;
+  width: 2em;
+  font-size: 20px;
+}

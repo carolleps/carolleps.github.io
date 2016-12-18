@@ -1,0 +1,56 @@
+#main {
+  @extend .margin;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.margin {
+  margin-left: -15px;
+  margin-right: -15px;
+}
+
+.container {
+  margin-right: auto;
+  margin-left: auto;
+  &:before {
+    content: " ";
+    display: table;
+  }
+  &:after {
+    @extend .container:before;
+    clear: both;
+  }
+  @media screen and (min-width: $first-breakpoint) {
+    width: 750px;
+  }
+
+  @media screen and (min-width: $second-breakpoint) {
+    width: 100%;
+  }
+
+  @media screen and (min-width: $third-breakpoint) {
+    width: 1170px;
+  }
+}
+
+.grid {
+  position: relative;
+  min-height: 1px;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-bottom: 15px;
+  @media screen and (min-width: $third-breakpoint) {
+    float: left;
+    &--3-col {
+      width: $width/3;
+    }
+    &--2-col {
+      width: $width/2;
+    }
+    &--1-col {
+      width: $width;
+    }
+  }
+}
+
