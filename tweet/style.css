@@ -1,0 +1,80 @@
+@import url(http://weloveiconfonts.com/api/?family=entypo);
+body {
+  background-color: #292f33;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+
+.container {
+  border: 1px solid #8899a6;
+  background-color: white;
+  border-radius: 5px; }
+  .container__size {
+    margin: 50px auto;
+    padding: 25px 50px;
+    width: 500px; }
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 5px;
+  float: left;
+  margin-right: 10px; }
+
+.header__name {
+  margin-top: 3px;
+  padding-top: 2px;
+  font-size: 18px;
+  line-height: 1.25;
+  color: #292f33;
+  font-weight: bold;
+  display: block; }
+.header__twitter-id {
+  font-size: 14px;
+  color: #8899a6; }
+
+.button {
+  background-image: linear-gradient(#fff, #f5f8fa);
+  color: #292f33;
+  border: 1px solid #e1e8ed;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: bold; }
+  .button__icon {
+    color: #1da1f2;
+    margin-top: 3px;
+    padding: 4px; }
+  .button__follow {
+    padding: 6px 12px;
+    display: inline-block;
+    float: right; }
+
+.tweet-text {
+  color: #292f33;
+  font-size: 26px;
+  line-height: 30px;
+  font-weight: 300;
+  letter-spacing: .01em; }
+
+.time {
+  color: #8899a6;
+  font-size: 12px;
+  line-height: 30px; }
+
+/* entypo */
+[class*="entypo-"]:before {
+  font-family: "entypo", sans-serif; }
+
+.actions__icon {
+  width: 60px;
+  color: #aab8c2;
+  font-size: 16px;
+  display: table-cell; }
+.actions [class$="-reply"]:hover {
+  color: #0E45B3; }
+.actions [class$="-retweet"]:hover {
+  color: #19cf86; }
+.actions [class$="-heart"]:hover {
+  color: #e81c4f; }
+.actions [class$="-dot-3"]:hover {
+  color: #0E45B3; }
+
+/*# sourceMappingURL=style.css.map */

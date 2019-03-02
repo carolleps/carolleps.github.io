@@ -1,0 +1,161 @@
+* {
+  font-family: 'Architects Daughter', cursive;
+  margin: 0 auto;
+  background-color: #294860;
+  max-width: 100%;
+  color: white;
+}
+
+h2 {
+  padding-top: 30px; 
+  margin-bottom: 15px;
+}
+
+h3 {
+   color: #969696;
+   margin-top: 10px;
+}
+
+h4 {
+  color: #969696;
+  letter-spacing: 0.05em;
+}
+
+
+ul.topnav {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    /*background-color: #333;*/
+}
+
+ul.topnav li {float: left;}
+
+ul.topnav li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+
+ul.topnav li a:hover:not(.nohover) {background-color: #54738b;}
+
+ul.topnav li a.active {background-color: #4CAF50;}
+
+ul.topnav li.right {float: right;}
+
+@media screen and (max-width: 600px){
+    ul.topnav li.right,
+    ul.topnav li {float: none;}
+}
+
+ul.topnav li a.marginicon{
+  padding-left: 0px;
+  padding-right: 0px;
+  margin-left: 12px;
+}
+
+.icone{
+  max-width: 50px;
+  min-width: 10px;
+}
+.horizontal {
+  float:left; 
+  display:inline-block;
+}
+
+.row {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.my-pic {
+  margin-top: 20px;
+  max-width: 150px;
+}
+
+.img-projects {
+  max-width: 250px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.content {
+  max-width: 600px;
+  margin: 0 auto 20px;
+}
+
+.first-content{
+  max-width: 300px;
+  margin: 0 auto 20px;
+  text-align: center;
+}
+
+.header-content {
+  height: 100%;
+}
+
+.end {
+  padding-bottom: 10px;
+}
+
+
+@media screen and (max-width: 380px) {
+  h1 {
+    font-size: 24px;
+  }
+}
+
+@media screen and (max-width: 464px) and (min-width: 381px) {
+  h1 {
+    font-size: 32px;
+  }
+}
+
+@media screen and (min-width: 465px) {
+  h1 {
+    font-size: 36px;
+  }
+}
+
+@media screen and (min-width: 550px) {
+  .header-content {
+    padding-top: 15px;
+  }
+}
+
+@media screen and (max-width: 549px) {
+  .header-content {
+    padding-top: 5px;
+  }
+}
+
+
+.iama {
+  max-width: 100%;
+  color: #969696;
+  letter-spacing: 0.05em;
+  font-size: 20px;
+  margin: 0;
+  text-align: center;
+}
+
+.my-info {
+  max-width: 100%;
+  font-size: 22px;
+  margin: 0 auto 20px;
+}
+
+.my-info-medio {
+  max-width: 100%;
+  font-size: 22px;
+  margin: 0 auto 5px;
+}
+
+.my-info:last-of-type {
+  margin: 0;
+}
+

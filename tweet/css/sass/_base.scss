@@ -1,0 +1,15 @@
+body {
+    background-color: $grey;
+    font-family: $font-family;
+}
+
+.container {
+    border: 1px solid $faded-grey;
+    background-color: white;
+    border-radius: $border-radius;
+    &__size {
+        margin: 50px auto;
+        padding: 25px 50px;
+        width: 500px;
+    }
+}

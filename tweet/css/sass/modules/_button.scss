@@ -1,0 +1,18 @@
+.button {
+    background-image: linear-gradient(#fff,#f5f8fa);
+    color: $grey;
+    border: 1px solid #e1e8ed;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: bold;
+    &__icon {
+        color: #1da1f2;
+        margin-top: 3px;
+        padding: 4px;
+    }
+    &__follow{
+        padding: 6px 12px;
+        display: inline-block;
+        float: right;
+    }
+}

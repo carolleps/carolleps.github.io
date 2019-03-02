@@ -1,0 +1,24 @@
+.avatar {
+        width: 48px;
+        height: 48px;
+        border-radius: $border-radius;
+        float: left; 
+        margin-right: 10px;
+}
+
+.header {
+    &__name {
+        margin-top: 3px;
+        padding-top: 2px;
+        font-size: 18px;
+        line-height: 1.25;
+        color: $grey;
+        font-weight: bold;
+        display: block;
+    }
+
+    &__twitter-id {
+        font-size: 14px;
+        color: $faded-grey;
+    }
+}
