@@ -1,0 +1,145 @@
+body {
+  height: 100%;
+  /*background-color: #294860;*/
+  font-family: 'Montserrat', sans-serif;
+  /*font-family: "Lato", sans-serif;*/
+  color: #1B1B1E;
+}
+
+h1 {
+  font-size: 2.5em;
+  color: white;
+}
+
+h2 {
+  font-size: 1.8em;
+  text-align: center;
+  color: #FF9505;
+}
+
+h4 {
+  font-size: 0.7em;
+  text-align: center;
+}
+
+h3 {
+  font-size: 1.5em;
+}
+
+input {
+  width: 90%;
+}
+
+li {
+  text-indent: 0px;
+  line-height: 30px;
+  display: block;
+  text-decoration: none;
+  color: #F0C595;
+}
+
+li:hover {
+  text-decoration: none;
+  color: #fff;
+  background: rgba(255,255,255,0.2);
+}
+
+.btn {
+  margin-left: 10px;
+  margin-top: 6px;
+}
+
+.container {
+  height: 100%;
+  width: 100%;
+  padding: 0px;
+}
+
+.header {
+  text-align: center;
+}
+
+.footer p {
+  font-size: 0.8em;
+}
+
+.footer {
+  text-align: center;
+}
+
+#show-toilets {
+  font-size: 1.3em;
+}
+
+#map {
+  /*height: 450px;*/
+  width: 100%;
+  height: 100vh;
+}
+.error {
+  text-align: center;
+  color: purple;
+}
+
+#menu-toggle {
+  float: left;
+}
+
+#sidebar-wrapper.toggled {
+  width: 250px;
+}
+
+#sidebar-wrapper {
+  z-index: 1000;
+  position: fixed;
+  left: 250px;
+  width: 0;
+  height: 100%;
+  margin-left: -260px;
+  overflow-y: auto;
+  background: #A9BCD0;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  padding-left: 10px;
+}
+
+#page-content-wrapper {
+  width: 100%;
+  position: absolute;
+  padding: 5px;
+}
+
+#searchbar {
+  padding-left: 5px;
+}
+
+#logo {
+  width:12%;
+}
+
+#teamlogo {
+  width:30%;
+}
+
+
+@media only screen and (max-width : 600px) {
+  h1 {
+    font-size: 1.5em;
+  }
+
+  h2 {
+    font-size: 1em;
+    margin-top: 10px;
+  }
+
+  #map {
+    width: 100%;
+  }
+
+  #logo {
+  width:40%;
+}
+
+}
