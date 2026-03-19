@@ -1,0 +1,1854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exercise Guide — Alenami Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0D0A07;
+  --bg-card: #181108;
+  --bg-card2: #1F1610;
+  --accent: #C4622D;
+  --gold: #D4A447;
+  --cream: #F0E6D3;
+  --muted: #8A7A68;
+  --border: rgba(212, 164, 71, 0.18);
+  --mon: #C4622D;
+  --wed: #4E819E;
+  --fri: #6B9958;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--cream);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 300;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── HEADER ── */
+.header {
+  text-align: center;
+  padding: 64px 24px 48px;
+  position: relative;
+  overflow: hidden;
+}
+.header::before {
+  content: '';
+  position: absolute;
+  top: -80px; left: 50%;
+  transform: translateX(-50%);
+  width: 600px; height: 400px;
+  background: radial-gradient(ellipse, rgba(196,98,45,0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+.header-label {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+  opacity: 0;
+  animation: fadeUp 0.6s ease 0.1s forwards;
+}
+.header h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: clamp(42px, 7vw, 80px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--cream);
+  opacity: 0;
+  animation: fadeUp 0.7s ease 0.2s forwards;
+}
+.header h1 em {
+  font-style: italic;
+  color: var(--gold);
+}
+.header-sub {
+  margin-top: 16px;
+  font-size: 15px;
+  color: var(--muted);
+  opacity: 0;
+  animation: fadeUp 0.7s ease 0.35s forwards;
+}
+.header-line {
+  width: 60px; height: 1px;
+  background: var(--gold);
+  opacity: 0.4;
+  margin: 32px auto 0;
+  animation: fadeUp 0.7s ease 0.45s forwards;
+}
+
+/* ── SESSION TABS ── */
+.tabs {
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  margin: 0 auto 52px;
+  max-width: 640px;
+  padding: 0 24px;
+  opacity: 0;
+  animation: fadeUp 0.7s ease 0.5s forwards;
+}
+.tab-btn {
+  flex: 1;
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-family: 'Outfit', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 14px 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+.tab-btn:first-child { border-radius: 4px 0 0 4px; }
+.tab-btn:last-child { border-radius: 0 4px 4px 0; }
+.tab-btn + .tab-btn { border-left: none; }
+.tab-btn::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 100%; height: 2px;
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+.tab-btn.active-mon { color: var(--mon); border-color: var(--mon); background: rgba(196,98,45,0.08); }
+.tab-btn.active-mon::after { background: var(--mon); transform: scaleX(1); }
+.tab-btn.active-wed { color: var(--wed); border-color: var(--wed); background: rgba(78,129,158,0.08); }
+.tab-btn.active-wed::after { background: var(--wed); transform: scaleX(1); }
+.tab-btn.active-fri { color: var(--fri); border-color: var(--fri); background: rgba(107,153,88,0.08); }
+.tab-btn.active-fri::after { background: var(--fri); transform: scaleX(1); }
+.tab-btn:hover:not(.active-mon):not(.active-wed):not(.active-fri) {
+  color: var(--cream);
+  background: rgba(240,230,211,0.04);
+}
+
+/* ── SESSION HEADER ── */
+.session-panel { display: none; }
+.session-panel.active { display: block; animation: panelIn 0.4s ease; }
+@keyframes panelIn { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:none; } }
+
+.session-header {
+  text-align: center;
+  padding: 0 24px 52px;
+}
+.session-day {
+  font-family: 'Outfit', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.session-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(28px, 5vw, 48px);
+  font-weight: 300;
+  letter-spacing: -0.01em;
+}
+.session-meta {
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* ── EXERCISE GRID ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2px;
+}
+
+/* ── EXERCISE CARD ── */
+.card {
+  background: var(--bg-card);
+  padding: 32px 28px;
+  cursor: pointer;
+  transition: background 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+.card:hover { background: var(--bg-card2); }
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px; height: 100%;
+  background: var(--card-color, var(--accent));
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.card:hover::before, .card.open::before { opacity: 1; }
+
+.card-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+/* ── EXERCISE ILLUSTRATION ── */
+.exercise-svg {
+  flex-shrink: 0;
+  width: 80px; height: 80px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.exercise-svg svg { width: 100%; height: 100%; }
+
+.card-info { flex: 1; min-width: 0; }
+
+.exercise-number {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 3px;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.exercise-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--cream);
+  margin-bottom: 10px;
+}
+
+.sets-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+}
+
+.muscles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 8px;
+}
+.muscle-tag {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  padding: 3px 9px;
+  border-radius: 20px;
+  border: 1px solid;
+  text-transform: uppercase;
+}
+
+/* ── EXPAND / COLLAPSE ── */
+.card-toggle {
+  position: absolute;
+  top: 28px; right: 24px;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease, background 0.2s;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1;
+}
+.card:hover .card-toggle { background: rgba(255,255,255,0.09); }
+.card.open .card-toggle { transform: rotate(45deg); }
+
+.card-body {
+  display: none;
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.card.open .card-body { display: block; }
+
+.instructions-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+.steps { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.steps li {
+  display: flex;
+  gap: 12px;
+  font-size: 14px;
+  color: #C8B89A;
+  line-height: 1.55;
+}
+.step-num {
+  flex-shrink: 0;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--bg);
+  margin-top: 1px;
+}
+
+.tip {
+  margin-top: 18px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 1.5;
+  border-left: 3px solid;
+  font-style: italic;
+  color: #C8B89A;
+}
+
+/* ── FOOTER CALLOUT ── */
+.warning-banner {
+  max-width: 900px;
+  margin: 60px auto 0;
+  padding: 20px 28px;
+  background: rgba(196,98,45,0.08);
+  border: 1px solid rgba(196,98,45,0.25);
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--muted);
+  text-align: center;
+  line-height: 1.6;
+}
+.warning-banner strong { color: var(--accent); }
+
+footer {
+  text-align: center;
+  padding: 40px 24px 60px;
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 1px;
+}
+
+/* ── SESSION DIVIDERS ── */
+.session-divider {
+  max-width: 900px;
+  margin: 32px auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.session-divider::before, .session-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(255,255,255,0.07);
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(16px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
+/* ── PRINT ── */
+@media print {
+  .tabs { display: none; }
+  .session-panel { display: block !important; }
+  .card-body { display: block !important; }
+  .card { break-inside: avoid; }
+  body { background: white; color: black; }
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  .grid { grid-template-columns: 1fr; }
+  .card-top { flex-direction: column; gap: 14px; }
+  .exercise-svg { width: 64px; height: 64px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<div class="header">
+  <div class="header-label">Women's Strength Program</div>
+  <h1>Your <em>Exercise</em><br>Guide</h1>
+  <p class="header-sub">3 sessions · 24 exercises · 40–45 min each</p>
+  <div class="header-line"></div>
+</div>
+
+<!-- ── TABS ── -->
+<div class="tabs">
+  <button class="tab-btn active-mon" onclick="showSession('mon', this)">Monday<br><span style="font-size:10px;letter-spacing:1px;text-transform:none;font-weight:300">Glutes & Lower</span></button>
+  <button class="tab-btn" onclick="showSession('wed', this)">Wednesday<br><span style="font-size:10px;letter-spacing:1px;text-transform:none;font-weight:300">Upper & Core</span></button>
+  <button class="tab-btn" onclick="showSession('fri', this)">Friday<br><span style="font-size:10px;letter-spacing:1px;text-transform:none;font-weight:300">Full Body</span></button>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- MONDAY SESSION -->
+<!-- ══════════════════════════════════════════ -->
+<div class="session-panel active" id="session-mon">
+  <div class="session-header">
+    <div class="session-day" style="color:var(--mon)">Monday</div>
+    <div class="session-title">Glutes &amp; Lower Body</div>
+    <div class="session-meta">7 exercises · Rest 60–90 sec between sets · Start with 5 min light skipping</div>
+  </div>
+
+  <div class="grid">
+
+    <!-- 1. Barbell Hip Thrust -->
+    <div class="card" style="--card-color: var(--mon)" onclick="toggleCard(this)">
+      <div class="card-top">
+        <div class="exercise-svg" style="background:rgba(196,98,45,0.08)">
+          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Bench -->
+            <rect x="10" y="60" width="35" height="8" rx="2" fill="rgba(196,98,45,0.3)" stroke="#C4622D" stroke-width="1.2"/>
+            <!-- Barbell -->
+            <rect x="15" y="42" width="70" height="5" rx="2.5" fill="rgba(196,98,45,0.2)" stroke="#C4622D" stroke-width="1.5"/>
+            <rect x="10" y="38" width="8" height="14" rx="2" fill="rgba(196,98,45,0.3)" stroke="#C4622D" stroke-width="1"/>
+            <rect x="82" y="38" width="8" height="14" rx="2" fill="rgba(196,98,45,0.3)" stroke="#C4622D" stroke-width="1"/>
+            <!-- Body in thrust position (side view) -->
+            <!-- Torso angled -->
+            <line x1="32" y1="44" x2="55" y2="55" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <!-- Head/shoulders on bench -->
+            <circle cx="28" cy="56" r="7" fill="none" stroke="#F0E6D3" stroke-width="1.8"/>
+            <!-- Hips (highlighted - the active muscle) -->
+            <ellipse cx="55" cy="44" rx="8" ry="6" fill="rgba(196,98,45,0.4)" stroke="#C4622D" stroke-width="1.5"/>
+            <!-- Thigh down to knee -->
+            <line x1="55" y1="50" x2="60" y2="75" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <!-- Shin -->
+            <line x1="60" y1="75" x2="60" y2="90" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <!-- Foot -->
+            <line x1="55" y1="90" x2="66" y2="90" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <!-- Arrow indicating upward drive -->
+            <path d="M68 35 L68 25 L72 29 M68 25 L64 29" stroke="#C4622D" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="card-info">
+          <div class="exercise-number">01 / Monday</div>
+          <div class="exercise-name">Barbell Hip Thrust</div>
+          <div class="sets-badge" style="background:rgba(196,98,45,0.15); color:var(--mon)">4 × 12 reps</div>
+          <div class="muscles">
+            <span class="muscle-tag" style="color:var(--mon); border-color:rgba(196,98,45,0.4)">Glutes ★</span>
+            <span class="muscle-tag" style="color:var(--muted); border-color:rgba(138,122,104,0.3)">Hamstrings</span>
+            <span class="muscle-tag" style="color:var(--muted); border-color:rgba(138,122,104,0.3)">Core</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-toggle">+</div>
+      <div class="card-body">
+        <div class="instructions-label">How to do it</div>
+        <ul class="steps">
+          <li><span class="step-num" style="background:var(--mon)">1</span> Sit on the floor with your upper back against the edge of a bench. Roll the barbell over your hips — use a pad to protect your hip bones.</li>
+          <li><span class="step-num" style="background:var(--mon)">2</span> Plant both feet flat on the floor, hip-width apart, knees at ~90°. Grip the bar lightly for stability.</li>
+          <li><span class="step-num" style="background:var(--mon)">3</span> Drive your hips explosively upward until your torso is parallel to the floor — like a tabletop. Chin tucked slightly.</li>
+          <li><span class="step-num" style="background:var(--mon)">4</span> Squeeze your glutes hard at the top for 1 second. Lower slowly with control.</li>
+        </ul>
+        <div class="tip" style="background:rgba(196,98,45,0.08); border-color:var(--mon)">
+          ⭐ THIS is your primary lift — make it the one you track and add weight to each week. Even 2.5kg extra per session compounds fast.
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Barbell Back Squat -->
+    <div class="card" style="--card-color: var(--mon)" onclick="toggleCard(this)">
+      <div class="card-top">
+        <div class="exercise-svg" style="background:rgba(196,98,45,0.08)">
+          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Barbell on back -->
+            <rect x="20" y="28" width="60" height="4" rx="2" fill="rgba(196,98,45,0.2)" stroke="#C4622D" stroke-width="1.2"/>
+            <rect x="14" y="24" width="6" height="12" rx="2" fill="rgba(196,98,45,0.3)" stroke="#C4622D" stroke-width="1"/>
+            <rect x="80" y="24" width="6" height="12" rx="2" fill="rgba(196,98,45,0.3)" stroke="#C4622D" stroke-width="1"/>
+            <!-- Head -->
+            <circle cx="50" cy="20" r="7" fill="none" stroke="#F0E6D3" stroke-width="1.8"/>
+            <!-- Torso (slightly forward lean) -->
+            <line x1="50" y1="27" x2="48" y2="55" stroke="#F0E6D3" stroke-width="2.2" stroke-linecap="round"/>
+            <!-- Hips highlighted -->
+            <ellipse cx="48" cy="56" rx="10" ry="6" fill="rgba(196,98,45,0.25)" stroke="#C4622D" stroke-width="1.2"/>
+            <!-- Left thigh (highlighted quads) -->
+            <path d="M44 60 Q36 72 34 82" stroke="#C4622D" stroke-width="2.5" stroke-linecap="round" opacity="0.8"/>
+            <!-- Right thigh -->
+            <path d="M52 60 Q60 72 62 82" stroke="#C4622D" stroke-width="2.5" stroke-linecap="round" opacity="0.8"/>
+            <!-- Left shin -->
+            <line x1="34" y1="82" x2="30" y2="96" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <!-- Right shin -->
+            <line x1="62" y1="82" x2="66" y2="96" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <!-- Feet -->
+            <line x1="25" y1="96" x2="35" y2="96" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <line x1="61" y1="96" x2="72" y2="96" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <!-- Arms holding bar -->
+            <line x1="46" y1="30" x2="30" y2="32" stroke="#F0E6D3" stroke-width="1.8" stroke-linecap="round"/>
+            <line x1="54" y1="30" x2="70" y2="32" stroke="#F0E6D3" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="card-info">
+          <div class="exercise-number">02 / Monday</div>
+          <div class="exercise-name">Barbell Back Squat</div>
+          <div class="sets-badge" style="background:rgba(196,98,45,0.15); color:var(--mon)">3 × 10 reps</div>
+          <div class="muscles">
+            <span class="muscle-tag" style="color:var(--mon); border-color:rgba(196,98,45,0.4)">Quads ★</span>
+            <span class="muscle-tag" style="color:var(--mon); border-color:rgba(196,98,45,0.4)">Glutes ★</span>
+            <span class="muscle-tag" style="color:var(--muted); border-color:rgba(138,122,104,0.3)">Hamstrings</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-toggle">+</div>
+      <div class="card-body">
+        <div class="instructions-label">How to do it</div>
+        <ul class="steps">
+          <li><span class="step-num" style="background:var(--mon)">1</span> Position the bar across your upper traps (not your neck). Step back, feet shoulder-width, toes angled slightly out.</li>
+          <li><span class="step-num" style="background:var(--mon)">2</span> Take a deep breath, brace your core as if expecting a punch. Keep your chest tall.</li>
+          <li><span class="step-num" style="background:var(--mon)">3</span> Hinge hips back and bend knees simultaneously. Lower until thighs are parallel to floor or below — depth is key.</li>
+          <li><span class="step-num" style="background:var(--mon)">4</span> Drive through your entire foot to stand, exhaling at the top. Repeat.</li>
+        </ul>
+        <div class="tip" style="background:rgba(196,98,45,0.08); border-color:var(--mon)">
+          💡 Start light — form and depth matter far more than weight at the start. Film yourself side-on to check your depth honestly.
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. Romanian Deadlift -->
+    <div class="card" style="--card-color: var(--mon)" onclick="toggleCard(this)">
+      <div class="card-top">
+        <div class="exercise-svg" style="background:rgba(196,98,45,0.08)">
+          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Barbell at bottom -->
+            <rect x="18" y="78" width="64" height="5" rx="2.5" fill="rgba(196,98,45,0.2)" stroke="#C4622D" stroke-width="1.5"/>
+            <rect x="12" y="74" width="7" height="13" rx="2" fill="rgba(196,98,45,0.3)" stroke="#C4622D" stroke-width="1"/>
+            <rect x="81" y="74" width="7" height="13" rx="2" fill="rgba(196,98,45,0.3)" stroke="#C4622D" stroke-width="1"/>
+            <!-- Head -->
+            <circle cx="50" cy="15" r="7" fill="none" stroke="#F0E6D3" stroke-width="1.8"/>
+            <!-- Torso (hinged forward, horizontal) -->
+            <line x1="50" y1="22" x2="50" y2="42" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <line x1="50" y1="42" x2="50" y2="55" stroke="#F0E6D3" stroke-width="2.2" stroke-linecap="round" opacity="0.5"/>
+            <!-- Arms down (gripping bar) -->
+            <line x1="48" y1="34" x2="34" y2="78" stroke="#F0E6D3" stroke-width="1.8" stroke-linecap="round"/>
+            <line x1="52" y1="34" x2="66" y2="78" stroke="#F0E6D3" stroke-width="1.8" stroke-linecap="round"/>
+            <!-- Hips (pivot point) -->
+            <circle cx="50" cy="55" r="5" fill="rgba(196,98,45,0.4)" stroke="#C4622D" stroke-width="1.5"/>
+            <!-- Hamstrings highlighted -->
+            <path d="M46 58 Q40 70 38 85" stroke="#C4622D" stroke-width="2.5" stroke-linecap="round" opacity="0.9"/>
+            <path d="M54 58 Q60 70 62 85" stroke="#C4622D" stroke-width="2.5" stroke-linecap="round" opacity="0.9"/>
+            <!-- Lower legs -->
+            <line x1="38" y1="85" x2="36" y2="98" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <line x1="62" y1="85" x2="64" y2="98" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <!-- Hip hinge arrow -->
+            <path d="M60 48 C65 44 68 50 64 54" stroke="#C4622D" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+            <path d="M64 54 L60 53 M64 54 L65 50" stroke="#C4622D" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="card-info">
+          <div class="exercise-number">03 / Monday</div>
+          <div class="exercise-name">Romanian Deadlift</div>
+          <div class="sets-badge" style="background:rgba(196,98,45,0.15); color:var(--mon)">3 × 12 reps</div>
+          <div class="muscles">
+            <span class="muscle-tag" style="color:var(--mon); border-color:rgba(196,98,45,0.4)">Hamstrings ★</span>
+            <span class="muscle-tag" style="color:var(--mon); border-color:rgba(196,98,45,0.4)">Glutes ★</span>
+            <span class="muscle-tag" style="color:var(--muted); border-color:rgba(138,122,104,0.3)">Lower Back</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-toggle">+</div>
+      <div class="card-body">
+        <div class="instructions-label">How to do it</div>
+        <ul class="steps">
+          <li><span class="step-num" style="background:var(--mon)">1</span> Stand holding barbell or dumbbells in front of thighs, shoulder-width grip. Soft bend in the knees — this is not a squat.</li>
+          <li><span class="step-num" style="background:var(--mon)">2</span> Push your hips back (like you're trying to touch a wall behind you). Keep the bar/weights close to your legs as they lower.</li>
+          <li><span class="step-num" style="background:var(--mon)">3</span> Lower until you feel a deep stretch in your hamstrings — usually just below the knee. Spine stays neutral throughout.</li>
+          <li><span class="step-num" style="background:var(--mon)">4</span> Drive hips forward to return to standing. Squeeze glutes at the top.</li>
+        </ul>
+        <div class="tip" style="background:rgba(196,98,45,0.08); border-color:var(--mon)">
+          💡 This is NOT a squat — legs stay mostly straight. Think "hip hinge," not "knee bend." Feel the hamstring stretch guiding your depth.
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. Walking Lunges -->
+    <div class="card" style="--card-color: var(--mon)" onclick="toggleCard(this)">
+      <div class="card-top">
+        <div class="exercise-svg" style="background:rgba(196,98,45,0.08)">
+          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Head -->
+            <circle cx="50" cy="12" r="7" fill="none" stroke="#F0E6D3" stroke-width="1.8"/>
+            <!-- Torso upright -->
+            <line x1="50" y1="19" x2="50" y2="46" stroke="#F0E6D3" stroke-width="2.2" stroke-linecap="round"/>
+            <!-- Dumbbells -->
+            <rect x="20" y="44" width="14" height="5" rx="2" fill="rgba(196,98,45,0.2)" stroke="#C4622D" stroke-width="1"/>
+            <rect x="66" y="44" width="14" height="5" rx="2" fill="rgba(196,98,45,0.2)" stroke="#C4622D" stroke-width="1"/>
+            <!-- Arms -->
+            <line x1="44" y1="30" x2="27" y2="46" stroke="#F0E6D3" stroke-width="1.8" stroke-linecap="round"/>
+            <line x1="56" y1="30" x2="73" y2="46" stroke="#F0E6D3" stroke-width="1.8" stroke-linecap="round"/>
+            <!-- Front leg (left) - highlighted -->
+            <path d="M46 46 Q38 62 34 74" stroke="#C4622D" stroke-width="2.5" stroke-linecap="round" opacity="0.9"/>
+            <line x1="34" y1="74" x2="28" y2="88" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <line x1="22" y1="88" x2="34" y2="88" stroke="#F0E6D3" stroke-width="2.5" stroke-linecap="round"/>
+            <!-- Back leg (right) - highlighted glute -->
+            <path d="M54" d="M54 46 Q62 58 66 70" stroke="#C4622D" stroke-width="2.5" stroke-linecap="round" opacity="0.7"/>
+            <path d="M54 46 Q62 58 66 70" stroke="#C4622D" stroke-width="2.5" stroke-linecap="round" opacity="0.7"/>
+            <!-- Back shin (near ground) -->
+            <line x1="66" y1="70" x2="66" y2="88" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <!-- Back knee dot -->
+            <circle cx="66" cy="70" r="3" fill="none" stroke="#C4622D" stroke-width="1.5"/>
+            <!-- Direction arrow -->
+            <path d="M76 50 L84 50 L80 46 M84 50 L80 54" stroke="#C4622D" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="card-info">
+          <div class="exercise-number">04 / Monday</div>
+          <div class="exercise-name">Walking Lunges</div>
+          <div class="sets-badge" style="background:rgba(196,98,45,0.15); color:var(--mon)">3 × 12 each leg</div>
+          <div class="muscles">
+            <span class="muscle-tag" style="color:var(--mon); border-color:rgba(196,98,45,0.4)">Glutes ★</span>
+            <span class="muscle-tag" style="color:var(--mon); border-color:rgba(196,98,45,0.4)">Quads ★</span>
+            <span class="muscle-tag" style="color:var(--muted); border-color:rgba(138,122,104,0.3)">Hamstrings</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-toggle">+</div>
+      <div class="card-body">
+        <div class="instructions-label">How to do it</div>
+        <ul class="steps">
+          <li><span class="step-num" style="background:var(--mon)">1</span> Hold dumbbells at your sides. Stand tall with core braced.</li>
+          <li><span class="step-num" style="background:var(--mon)">2</span> Step one foot forward and lower your back knee toward the floor — don't let it slam down.</li>
+          <li><span class="step-num" style="background:var(--mon)">3</span> Front shin stays vertical. Don't let your front knee cave in.</li>
+          <li><span class="step-num" style="background:var(--mon)">4</span> Push through your front heel to stand, bringing your back foot forward into the next step. Alternate legs.</li>
+        </ul>
+        <div class="tip" style="background:rgba(196,98,45,0.08); border-color:var(--mon)">
+          💡 Keep your torso perfectly upright — leaning forward shifts the work away from your glutes. Do these in a hallway or loop around your space.
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. Banded Lateral Walks -->
+    <div class="card" style="--card-color: var(--mon)" onclick="toggleCard(this)">
+      <div class="card-top">
+        <div class="exercise-svg" style="background:rgba(196,98,45,0.08)">
+          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Head -->
+            <circle cx="50" cy="16" r="7" fill="none" stroke="#F0E6D3" stroke-width="1.8"/>
+            <!-- Torso slightly forward -->
+            <line x1="50" y1="23" x2="50" y2="52" stroke="#F0E6D3" stroke-width="2.2" stroke-linecap="round"/>
+            <!-- Arms out front (hands on hips/out) -->
+            <line x1="45" y1="33" x2="30" y2="42" stroke="#F0E6D3" stroke-width="1.8" stroke-linecap="round"/>
+            <line x1="55" y1="33" x2="70" y2="42" stroke="#F0E6D3" stroke-width="1.8" stroke-linecap="round"/>
+            <!-- Hip area -->
+            <ellipse cx="50" cy="52" rx="12" ry="5" fill="none" stroke="#F0E6D3" stroke-width="1.5"/>
+            <!-- Resistance band (just above knees) -->
+            <path d="M28 72 Q50 68 72 72" stroke="#C4622D" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="28" cy="72" r="3" fill="#C4622D" opacity="0.6"/>
+            <circle cx="72" cy="72" r="3" fill="#C4622D" opacity="0.6"/>
+            <!-- Left leg (wide stance) - hip abductors highlighted -->
+            <path d="M44 56 Q32 64 28 72" stroke="#C4622D" stroke-width="2.5" stroke-linecap="round" opacity="0.8"/>
+            <line x1="28" y1="72" x2="24" y2="92" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <!-- Right leg -->
+            <path d="M56 56 Q68 64 72 72" stroke="#C4622D" stroke-width="2.5" stroke-linecap="round" opacity="0.8"/>
+            <line x1="72" y1="72" x2="76" y2="92" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <!-- Direction arrows -->
+            <path d="M10 50 L4 50 L8 46 M4 50 L8 54" stroke="#C4622D" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M90 50 L96 50 L92 46 M96 50 L92 54" stroke="#C4622D" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="card-info">
+          <div class="exercise-number">05 / Monday</div>
+          <div class="exercise-name">Banded Lateral Walks</div>
+          <div class="sets-badge" style="background:rgba(196,98,45,0.15); color:var(--mon)">3 × 15 each direction</div>
+          <div class="muscles">
+            <span class="muscle-tag" style="color:var(--mon); border-color:rgba(196,98,45,0.4)">Glute Medius ★</span>
+            <span class="muscle-tag" style="color:var(--muted); border-color:rgba(138,122,104,0.3)">Hip Abductors</span>
+            <span class="muscle-tag" style="color:var(--muted); border-color:rgba(138,122,104,0.3)">Glutes</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-toggle">+</div>
+      <div class="card-body">
+        <div class="instructions-label">How to do it</div>
+        <ul class="steps">
+          <li><span class="step-num" style="background:var(--mon)">1</span> Place the resistance band just above your knees. Feet shoulder-width apart — enough that the band already has tension.</li>
+          <li><span class="step-num" style="background:var(--mon)">2</span> Drop into a slight squat position — slight forward hinge, knees soft. Stay in this position the entire set.</li>
+          <li><span class="step-num" style="background:var(--mon)">3</span> Step sideways, leading with one foot, then bring the other foot in — but don't let them come all the way together or you lose tension.</li>
+          <li><span class="step-num" style="background:var(--mon)">4</span> 15 steps right, 15 steps left = 1 set. Keep the knees pushing slightly outward against the band throughout.</li>
+        </ul>
+        <div class="tip" style="background:rgba(196,98,45,0.08); border-color:var(--mon)">
+          💡 The moment the band goes slack, the outer glute stops working. Stay wide — maintain tension on every single step.
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. Glute Kickbacks -->
+    <div class="card" style="--card-color: var(--mon)" onclick="toggleCard(this)">
+      <div class="card-top">
+        <div class="exercise-svg" style="background:rgba(196,98,45,0.08)">
+          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Rack post -->
+            <rect x="10" y="10" width="5" height="85" rx="2" fill="rgba(196,98,45,0.2)" stroke="#C4622D" stroke-width="1"/>
+            <!-- Band -->
+            <path d="M15 75 Q30 70 38 68" stroke="#C4622D" stroke-width="2" stroke-linecap="round" stroke-dasharray="4 2"/>
+            <!-- Person facing rack, leaning hands on it -->
+            <circle cx="52" cy="25" r="7" fill="none" stroke="#F0E6D3" stroke-width="1.8"/>
+            <!-- Torso leaning forward -->
+            <line x1="52" y1="32" x2="38" y2="55" stroke="#F0E6D3" stroke-width="2.2" stroke-linecap="round"/>
+            <!-- Arms holding rack -->
+            <line x1="44" y1="38" x2="15" y2="45" stroke="#F0E6D3" stroke-width="1.8" stroke-linecap="round"/>
+            <!-- Hips (glutes highlighted) -->
+            <ellipse cx="38" cy="56" rx="8" ry="5" fill="rgba(196,98,45,0.4)" stroke="#C4622D" stroke-width="1.5"/>
+            <!-- Standing leg -->
+            <line x1="35" y1="60" x2="32" y2="82" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <line x1="32" y1="82" x2="28" y2="95" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <!-- Kicking leg (extended back and up - highlighted) -->
+            <path d="M41 60 Q55 62 66 52" stroke="#C4622D" stroke-width="2.5" stroke-linecap="round" opacity="0.9"/>
+            <!-- Ankle/foot of kicking leg -->
+            <circle cx="66" cy="52" r="3" fill="#C4622D" opacity="0.5"/>
+            <!-- Squeeze indication -->
+            <path d="M58 45 C62 42 65 45 62 48" stroke="#C4622D" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+            <text x="64" y="42" font-size="8" fill="#C4622D" font-family="Outfit">✕</text>
+          </svg>
+        </div>
+        <div class="card-info">
+          <div class="exercise-number">06 / Monday</div>
+          <div class="exercise-name">Glute Kickbacks</div>
+          <div class="sets-badge" style="background:rgba(196,98,45,0.15); color:var(--mon)">3 × 15 each leg</div>
+          <div class="muscles">
+            <span class="muscle-tag" style="color:var(--mon); border-color:rgba(196,98,45,0.4)">Glutes ★★</span>
+            <span class="muscle-tag" style="color:var(--muted); border-color:rgba(138,122,104,0.3)">Hamstrings</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-toggle">+</div>
+      <div class="card-body">
+        <div class="instructions-label">How to do it</div>
+        <ul class="steps">
+          <li><span class="step-num" style="background:var(--mon)">1</span> Loop the band around the rack at ankle height. Stand facing the rack, loop one ankle through the band.</li>
+          <li><span class="step-num" style="background:var(--mon)">2</span> Rest hands lightly on the rack for balance. Slight forward lean at the hips.</li>
+          <li><span class="step-num" style="background:var(--mon)">3</span> Keeping core tight, kick the banded leg straight back and slightly up. Squeeze your glute hard at the peak.</li>
+          <li><span class="step-num" style="background:var(--mon)">4</span> Return slowly with control — don't let the band yank your leg forward. Complete all reps, then switch legs.</li>
+        </ul>
+        <div class="tip" style="background:rgba(196,98,45,0.08); border-color:var(--mon)">
+          💡 Don't let your lower back arch at the top — the glute does the work, not the spine. Think "squeeze glute, not back."
+        </div>
+      </div>
+    </div>
+
+    <!-- 7. Plank Hold -->
+    <div class="card" style="--card-color: var(--mon)" onclick="toggleCard(this)">
+      <div class="card-top">
+        <div class="exercise-svg" style="background:rgba(196,98,45,0.08)">
+          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Floor -->
+            <line x1="5" y1="72" x2="95" y2="72" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+            <!-- Body in plank (side view) -->
+            <!-- Head -->
+            <circle cx="80" cy="54" r="7" fill="none" stroke="#F0E6D3" stroke-width="1.8"/>
+            <!-- Neck to shoulders -->
+            <line x1="73" y1="57" x2="68" y2="60" stroke="#F0E6D3" stroke-width="1.8" stroke-linecap="round"/>
+            <!-- Torso (straight) - core highlighted -->
+            <rect x="30" y="56" width="38" height="10" rx="4" fill="rgba(196,98,45,0.25)" stroke="#C4622D" stroke-width="1.2"/>
+            <!-- Arm (forearm on floor) -->
+            <line x1="68" y1="60" x2="68" y2="72" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <!-- Forearm on floor -->
+            <line x1="58" y1="72" x2="72" y2="72" stroke="#F0E6D3" stroke-width="2.5" stroke-linecap="round"/>
+            <!-- Hips in line -->
+            <line x1="30" y1="61" x2="20" y2="68" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <!-- Legs -->
+            <line x1="20" y1="68" x2="12" y2="72" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <!-- Toes on floor -->
+            <circle cx="12" cy="72" r="3" fill="none" stroke="#F0E6D3" stroke-width="1.5"/>
+            <!-- Core/shoulders highlighted -->
+            <circle cx="68" cy="60" r="4" fill="rgba(196,98,45,0.3)" stroke="#C4622D" stroke-width="1"/>
+            <!-- Straight line indicator -->
+            <path d="M10 50 L82 50" stroke="rgba(196,98,45,0.3)" stroke-width="1" stroke-dasharray="4 3"/>
+            <text x="14" y="48" font-size="7" fill="rgba(196,98,45,0.7)" font-family="Outfit">straight line</text>
+          </svg>
+        </div>
+        <div class="card-info">
+          <div class="exercise-number">07 / Monday</div>
+          <div class="exercise-name">Plank Hold</div>
+          <div class="sets-badge" style="background:rgba(196,98,45,0.15); color:var(--mon)">3 × 30–45 sec</div>
+          <div class="muscles">
+            <span class="muscle-tag" style="color:var(--mon); border-color:rgba(196,98,45,0.4)">Core ★</span>
+            <span class="muscle-tag" style="color:var(--muted); border-color:rgba(138,122,104,0.3)">Shoulders</span>
+            <span class="muscle-tag" style="color:var(--muted); border-color:rgba(138,122,104,0.3)">Glutes</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-toggle">+</div>
+      <div class="card-body">
+        <div class="instructions-label">How to do it</div>
+        <ul class="steps">
+          <li><span class="step-num" style="background:var(--mon)">1</span> Place forearms on the floor, elbows under shoulders. Rise onto your toes so only forearms and toes touch the floor.</li>
+          <li><span class="step-num" style="background:var(--mon)">2</span> Squeeze everything simultaneously: glutes, quads, abs. Your body should be a rigid plank — no sagging hips, no raised bum.</li>
+          <li><span class="step-num" style="background:var(--mon)">3</span> Eyes look down at the floor to keep your neck in a neutral position.</li>
+          <li><span class="step-num" style="background:var(--mon)">4</span> Breathe steadily. Hold for the target time. Lower with control.</li>
+        </ul>
+        <div class="tip" style="background:rgba(196,98,45,0.08); border-color:var(--mon)">
+          💡 Squeezing your glutes AND quads (not just your abs) makes this dramatically more effective — and harder. Build toward 60 seconds over time.
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end monday grid -->
+
+  <div class="warning-banner" style="margin:48px 24px 0">
+    <strong>⚠️ Heart Rate Note:</strong> Alenami mildly raises your resting heart rate. Exercise will feel harder than usual — this is normal. Keep intensity moderate. If your heart is racing uncomfortably, you feel dizzy, or have chest tightness: stop and rest. Build gradually over your first 2–3 weeks.
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════ -->
+<!-- WEDNESDAY SESSION -->
+<!-- ══════════════════════════════════════════ -->
+<div class="session-panel" id="session-wed">
+  <div class="session-header">
+    <div class="session-day" style="color:var(--wed)">Wednesday</div>
+    <div class="session-title">Upper Body &amp; Core</div>
+    <div class="session-meta">9 exercises · Moderate weights, full range of motion · Last 2 reps should feel challenging</div>
+  </div>
+
+  <div class="grid">
+
+    <!-- 8. Shoulder Press -->
+    <div class="card" style="--card-color: var(--wed)" onclick="toggleCard(this)">
+      <div class="card-top">
+        <div class="exercise-svg" style="background:rgba(78,129,158,0.08)">
+          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Dumbbells overhead -->
+            <rect x="14" y="14" width="20" height="6" rx="3" fill="rgba(78,129,158,0.3)" stroke="#4E819E" stroke-width="1.2"/>
+            <rect x="66" y="14" width="20" height="6" rx="3" fill="rgba(78,129,158,0.3)" stroke="#4E819E" stroke-width="1.2"/>
+            <!-- Head -->
+            <circle cx="50" cy="30" r="7" fill="none" stroke="#F0E6D3" stroke-width="1.8"/>
+            <!-- Neck/torso -->
+            <line x1="50" y1="37" x2="50" y2="68" stroke="#F0E6D3" stroke-width="2.2" stroke-linecap="round"/>
+            <!-- Shoulders highlighted -->
+            <ellipse cx="40" cy="42" rx="7" ry="5" fill="rgba(78,129,158,0.4)" stroke="#4E819E" stroke-width="1.5" transform="rotate(-20 40 42)"/>
+            <ellipse cx="60" cy="42" rx="7" ry="5" fill="rgba(78,129,158,0.4)" stroke="#4E819E" stroke-width="1.5" transform="rotate(20 60 42)"/>
+            <!-- Arms raised overhead -->
+            <line x1="43" y1="38" x2="24" y2="18" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <line x1="57" y1="38" x2="76" y2="18" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <!-- Hips/legs -->
+            <line x1="46" y1="68" x2="40" y2="88" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <line x1="54" y1="68" x2="60" y2="88" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <line x1="34" y1="88" x2="47" y2="88" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <line x1="53" y1="88" x2="66" y2="88" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <!-- Press arrows -->
+            <path d="M24 20 L24 12 L28 16 M24 12 L20 16" stroke="#4E819E" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M76 20 L76 12 L80 16 M76 12 L72 16" stroke="#4E819E" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="card-info">
+          <div class="exercise-number">01 / Wednesday</div>
+          <div class="exercise-name">Dumbbell Shoulder Press</div>
+          <div class="sets-badge" style="background:rgba(78,129,158,0.15); color:var(--wed)">3 × 12 reps</div>
+          <div class="muscles">
+            <span class="muscle-tag" style="color:var(--wed); border-color:rgba(78,129,158,0.4)">Deltoids ★</span>
+            <span class="muscle-tag" style="color:var(--muted); border-color:rgba(138,122,104,0.3)">Triceps</span>
+            <span class="muscle-tag" style="color:var(--muted); border-color:rgba(138,122,104,0.3)">Core</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-toggle">+</div>
+      <div class="card-body">
+        <div class="instructions-label">How to do it</div>
+        <ul class="steps">
+          <li><span class="step-num" style="background:var(--wed)">1</span> Sit or stand holding dumbbells at shoulder height, palms facing forward, elbows at ~90°.</li>
+          <li><span class="step-num" style="background:var(--wed)">2</span> Brace your core and press both dumbbells directly overhead in a slight arc until arms are nearly straight.</li>
+          <li><span class="step-num" style="background:var(--wed)">3</span> Don't lock elbows hard at the top. Lower slowly and with control back to the start position.</li>
+          <li><span class="step-num" style="background:var(--wed)">4</span> Keep your lower back from arching — if seated, this is easier to control.</li>
+        </ul>
+        <div class="tip" style="background:rgba(78,129,158,0.08); border-color:var(--wed)">
+          💡 Press straight up over your shoulders — not forward. Imagine you're pressing toward the ceiling directly above your head.
+        </div>
+      </div>
+    </div>
+
+    <!-- 9. Bent-Over Row -->
+    <div class="card" style="--card-color: var(--wed)" onclick="toggleCard(this)">
+      <div class="card-top">
+        <div class="exercise-svg" style="background:rgba(78,129,158,0.08)">
+          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Dumbbells -->
+            <rect x="20" y="64" width="16" height="5" rx="2.5" fill="rgba(78,129,158,0.3)" stroke="#4E819E" stroke-width="1.2"/>
+            <rect x="64" y="64" width="16" height="5" rx="2.5" fill="rgba(78,129,158,0.3)" stroke="#4E819E" stroke-width="1.2"/>
+            <!-- Head (hinging forward) -->
+            <circle cx="82" cy="24" r="7" fill="none" stroke="#F0E6D3" stroke-width="1.8"/>
+            <!-- Torso (bent over ~45°) -->
+            <line x1="76" y1="28" x2="50" y2="52" stroke="#F0E6D3" stroke-width="2.2" stroke-linecap="round"/>
+            <!-- Back (highlighted) -->
+            <rect x="45" y="44" width="32" height="12" rx="4" fill="rgba(78,129,158,0.25)" stroke="#4E819E" stroke-width="1.2" transform="rotate(-42 45 44)"/>
+            <!-- Arms hanging down -->
+            <line x1="60" y1="48" x2="28" y2="66" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <line x1="52" y1="52" x2="72" y2="66" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <!-- Hip hinge -->
+            <ellipse cx="50" cy="52" rx="6" ry="4" fill="none" stroke="#F0E6D3" stroke-width="1.2"/>
+            <!-- Legs -->
+            <line x1="46" y1="55" x2="40" y2="78" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <line x1="54" y1="55" x2="60" y2="78" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <line x1="34" y1="78" x2="46" y2="78" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <line x1="54" y1="78" x2="66" y2="78" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <!-- Row arrows (upward) -->
+            <path d="M28 60 L28 50 L32 54 M28 50 L24 54" stroke="#4E819E" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M72 60 L72 50 L76 54 M72 50 L68 54" stroke="#4E819E" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="card-info">
+          <div class="exercise-number">02 / Wednesday</div>
+          <div class="exercise-name">Dumbbell Bent-Over Row</div>
+          <div class="sets-badge" style="background:rgba(78,129,158,0.15); color:var(--wed)">3 × 12 reps</div>
+          <div class="muscles">
+            <span class="muscle-tag" style="color:var(--wed); border-color:rgba(78,129,158,0.4)">Back ★</span>
+            <span class="muscle-tag" style="color:var(--muted); border-color:rgba(138,122,104,0.3)">Rhomboids</span>
+            <span class="muscle-tag" style="color:var(--muted); border-color:rgba(138,122,104,0.3)">Biceps</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-toggle">+</div>
+      <div class="card-body">
+        <div class="instructions-label">How to do it</div>
+        <ul class="steps">
+          <li><span class="step-num" style="background:var(--wed)">1</span> Hinge at the hips with a flat back, leaning forward ~45°. Hold dumbbells hanging straight down, palms facing each other.</li>
+          <li><span class="step-num" style="background:var(--wed)">2</span> Pull both elbows up and back toward your hips — not toward your ears.</li>
+          <li><span class="step-num" style="background:var(--wed)">3</span> Squeeze your shoulder blades together at the top for 1 second.</li>
+          <li><span class="step-num" style="background:var(--wed)">4</span> Lower slowly and with full control — don't let gravity do the work on the way down.</li>
+        </ul>
+        <div class="tip" style="background:rgba(78,129,158,0.08); border-color:var(--wed)">
+          💡 Think "elbows to hips" — this keeps the focus on your mid-back. Essential for desk workers: this exercise directly counteracts forward posture.
+        </div>
+      </div>
+    </div>
+
+    <!-- 10. Floor Chest Press -->
+    <div class="card" style="--card-color: var(--wed)" onclick="toggleCard(this)">
+      <div class="card-top">
+        <div class="exercise-svg" style="background:rgba(78,129,158,0.08)">
+          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Floor -->
+            <line x1="5" y1="80" x2="95" y2="80" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+            <!-- Dumbbells -->
+            <rect x="10" y="56" width="16" height="5" rx="2.5" fill="rgba(78,129,158,0.3)" stroke="#4E819E" stroke-width="1.2"/>
+            <rect x="74" y="56" width="16" height="5" rx="2.5" fill="rgba(78,129,158,0.3)" stroke="#4E819E" stroke-width="1.2"/>
+            <!-- Body lying on back -->
+            <!-- Head -->
+            <circle cx="82" cy="68" r="7" fill="none" stroke="#F0E6D3" stroke-width="1.8"/>
+            <!-- Torso (lying) -->
+            <rect x="24" y="64" width="50" height="12" rx="6" fill="rgba(78,129,158,0.15)" stroke="#4E819E" stroke-width="1"/>
+            <!-- Chest highlighted -->
+            <ellipse cx="48" cy="66" rx="18" ry="6" fill="rgba(78,129,158,0.25)" stroke="#4E819E" stroke-width="1.2"/>
+            <!-- Arms pressing up -->
+            <line x1="74" y1="68" x2="62" y2="58" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <line x1="24" y1="68" x2="36" y2="58" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <!-- Knees bent -->
+            <line x1="24" y1="76" x2="18" y2="60" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <line x1="28" y1="76" x2="24" y2="60" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <!-- Feet flat on floor -->
+            <line x1="12" y1="78" x2="22" y2="78" stroke="#F0E6D3" stroke-width="2.5" stroke-linecap="round"/>
+            <!-- Press arrows -->
+            <path d="M36 52 L36 44 L40 48 M36 44 L32 48" stroke="#4E819E" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M62 52 L62 44 L66 48 M62 44 L58 48" stroke="#4E819E" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="card-info">
+          <div class="exercise-number">03 / Wednesday</div>
+          <div class="exercise-name">Floor Chest Press</div>
+          <div class="sets-badge" style="background:rgba(78,129,158,0.15); color:var(--wed)">3 × 10 reps</div>
+          <div class="muscles">
+            <span class="muscle-tag" style="color:var(--wed); border-color:rgba(78,129,158,0.4)">Chest ★</span>
+            <span class="muscle-tag" style="color:var(--muted); border-color:rgba(138,122,104,0.3)">Triceps</span>
+            <span class="muscle-tag" style="color:var(--muted); border-color:rgba(138,122,104,0.3)">Front Deltoids</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-toggle">+</div>
+      <div class="card-body">
+        <div class="instructions-label">How to do it</div>
+        <ul class="steps">
+          <li><span class="step-num" style="background:var(--wed)">1</span> Lie on your back on the floor, knees bent, feet flat. Hold dumbbells at chest height, elbows resting on the floor.</li>
+          <li><span class="step-num" style="background:var(--wed)">2</span> Press both dumbbells straight up until arms are fully extended above your chest.</li>
+          <li><span class="step-num" style="background:var(--wed)">3</span> Lower slowly until your upper arms touch the floor again — this is your natural stop point.</li>
+          <li><span class="step-num" style="background:var(--wed)">4</span> Press back up immediately after touching. Breathe out on the press.</li>
+        </ul>
+        <div class="tip" style="background:rgba(78,129,158,0.08); border-color:var(--wed)">
+          💡 The floor acts as a natural safety stop — you can use heavier dumbbells with more confidence than a bench. A great beginner-friendly variation.
+        </div>
+      </div>
+    </div>
+
+    <!-- 11. Lateral Raises -->
+    <div class="card" style="--card-color: var(--wed)" onclick="toggleCard(this)">
+      <div class="card-top">
+        <div class="exercise-svg" style="background:rgba(78,129,158,0.08)">
+          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Dumbbells at sides (raised) -->
+            <rect x="5" y="44" width="14" height="5" rx="2.5" fill="rgba(78,129,158,0.3)" stroke="#4E819E" stroke-width="1.2"/>
+            <rect x="81" y="44" width="14" height="5" rx="2.5" fill="rgba(78,129,158,0.3)" stroke="#4E819E" stroke-width="1.2"/>
+            <!-- Head -->
+            <circle cx="50" cy="18" r="7" fill="none" stroke="#F0E6D3" stroke-width="1.8"/>
+            <!-- Torso -->
+            <line x1="50" y1="25" x2="50" y2="58" stroke="#F0E6D3" stroke-width="2.2" stroke-linecap="round"/>
+            <!-- Side deltoids highlighted -->
+            <ellipse cx="38" cy="34" rx="8" ry="5" fill="rgba(78,129,158,0.5)" stroke="#4E819E" stroke-width="1.5" transform="rotate(-30 38 34)"/>
+            <ellipse cx="62" cy="34" rx="8" ry="5" fill="rgba(78,129,158,0.5)" stroke="#4E819E" stroke-width="1.5" transform="rotate(30 62 34)"/>
+            <!-- Arms raised to T position -->
+            <line x1="43" y1="30" x2="19" y2="46" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <line x1="57" y1="30" x2="81" y2="46" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <!-- Legs -->
+            <line x1="46" y1="58" x2="42" y2="82" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <line x1="54" y1="58" x2="58" y2="82" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <line x1="36" y1="82" x2="48" y2="82" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <line x1="52" y1="82" x2="64" y2="82" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <!-- "T shape" indicator -->
+            <line x1="8" y1="50" x2="92" y2="50" stroke="rgba(78,129,158,0.25)" stroke-width="1" stroke-dasharray="3 3"/>
+          </svg>
+        </div>
+        <div class="card-info">
+          <div class="exercise-number">04 / Wednesday</div>
+          <div class="exercise-name">Lateral Raises</div>
+          <div class="sets-badge" style="background:rgba(78,129,158,0.15); color:var(--wed)">3 × 15 reps</div>
+          <div class="muscles">
+            <span class="muscle-tag" style="color:var(--wed); border-color:rgba(78,129,158,0.4)">Side Deltoids ★</span>
+            <span class="muscle-tag" style="color:var(--muted); border-color:rgba(138,122,104,0.3)">Traps</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-toggle">+</div>
+      <div class="card-body">
+        <div class="instructions-label">How to do it</div>
+        <ul class="steps">
+          <li><span class="step-num" style="background:var(--wed)">1</span> Stand holding very light dumbbells at your sides, palms facing your body. Soft bend in the elbows.</li>
+          <li><span class="step-num" style="background:var(--wed)">2</span> Raise both arms directly out to the sides simultaneously until they're parallel to the floor — forming a T shape.</li>
+          <li><span class="step-num" style="background:var(--wed)">3</span> Hold for 1 second at the top. Then lower on a 3-count — slowly.</li>
+          <li><span class="step-num" style="background:var(--wed)">4</span> Keep your torso still throughout — if you're swinging your hips, the weight is too heavy.</li>
+        </ul>
+        <div class="tip" style="background:rgba(78,129,158,0.08); border-color:var(--wed)">
+          💡 Go lighter than you think. 4–6kg is usually the right weight for most beginners. The slow descent is where the muscle-building actually happens.
+        </div>
+      </div>
+    </div>
+
+    <!-- 12. Face Pulls -->
+    <div class="card" style="--card-color: var(--wed)" onclick="toggleCard(this)">
+      <div class="card-top">
+        <div class="exercise-svg" style="background:rgba(78,129,158,0.08)">
+          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Rack -->
+            <rect x="5" y="5" width="5" height="90" rx="2" fill="rgba(78,129,158,0.15)" stroke="#4E819E" stroke-width="1"/>
+            <!-- Band at head height -->
+            <line x1="10" y1="35" x2="28" y2="35" stroke="#4E819E" stroke-width="1.5" stroke-dasharray="3 2"/>
+            <!-- Person (front view, pulling) -->
+            <!-- Head -->
+            <circle cx="60" cy="30" r="7" fill="none" stroke="#F0E6D3" stroke-width="1.8"/>
+            <!-- Torso -->
+            <line x1="60" y1="37" x2="60" y2="66" stroke="#F0E6D3" stroke-width="2.2" stroke-linecap="round"/>
+            <!-- Rear deltoids + upper back highlighted -->
+            <ellipse cx="52" cy="42" rx="8" ry="5" fill="rgba(78,129,158,0.4)" stroke="#4E819E" stroke-width="1.2" transform="rotate(20 52 42)"/>
+            <ellipse cx="68" cy="42" rx="8" ry="5" fill="rgba(78,129,158,0.4)" stroke="#4E819E" stroke-width="1.2" transform="rotate(-20 68 42)"/>
+            <!-- Arms pulling wide (elbows flaring) -->
+            <line x1="55" y1="38" x2="34" y2="28" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <line x1="65" y1="38" x2="86" y2="28" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <!-- Hands gripping band -->
+            <circle cx="34" cy="28" r="3" fill="rgba(78,129,158,0.5)" stroke="#4E819E" stroke-width="1"/>
+            <circle cx="86" cy="28" r="3" fill="rgba(78,129,158,0.5)" stroke="#4E819E" stroke-width="1"/>
+            <!-- Legs -->
+            <line x1="56" y1="66" x2="52" y2="88" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <line x1="64" y1="66" x2="68" y2="88" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <line x1="46" y1="88" x2="58" y2="88" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <line x1="62" y1="88" x2="74" y2="88" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="card-info">
+          <div class="exercise-number">05 / Wednesday</div>
+          <div class="exercise-name">Face Pulls with Band</div>
+          <div class="sets-badge" style="background:rgba(78,129,158,0.15); color:var(--wed)">3 × 15 reps</div>
+          <div class="muscles">
+            <span class="muscle-tag" style="color:var(--wed); border-color:rgba(78,129,158,0.4)">Rear Deltoids ★</span>
+            <span class="muscle-tag" style="color:var(--wed); border-color:rgba(78,129,158,0.4)">Upper Back ★</span>
+            <span class="muscle-tag" style="color:var(--muted); border-color:rgba(138,122,104,0.3)">Rotator Cuff</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-toggle">+</div>
+      <div class="card-body">
+        <div class="instructions-label">How to do it</div>
+        <ul class="steps">
+          <li><span class="step-num" style="background:var(--wed)">1</span> Loop band at head height on the rack. Hold both ends with an overhand grip. Step back until there's tension in the band.</li>
+          <li><span class="step-num" style="background:var(--wed)">2</span> Pull the band toward your face, flaring your elbows wide and high — think "double bicep pose" as you pull.</li>
+          <li><span class="step-num" style="background:var(--wed)">3</span> At the peak, your hands should be at ear level and elbows pointing out to the sides. Hold 1 second.</li>
+          <li><span class="step-num" style="background:var(--wed)">4</span> Return slowly with full control. The band should be under tension even at full extension.</li>
+        </ul>
+        <div class="tip" style="background:rgba(78,129,158,0.08); border-color:var(--wed)">
+          💡 This is the single best posture exercise in this program. It directly counteracts desk-worker hunching. Do it every session without exception.
+        </div>
+      </div>
+    </div>
+
+    <!-- 13. Bicep Curl -->
+    <div class="card" style="--card-color: var(--wed)" onclick="toggleCard(this)">
+      <div class="card-top">
+        <div class="exercise-svg" style="background:rgba(78,129,158,0.08)">
+          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Head -->
+            <circle cx="50" cy="14" r="7" fill="none" stroke="#F0E6D3" stroke-width="1.8"/>
+            <!-- Torso -->
+            <line x1="50" y1="21" x2="50" y2="56" stroke="#F0E6D3" stroke-width="2.2" stroke-linecap="round"/>
+            <!-- Left arm (curling - highlighted bicep) -->
+            <!-- Upper arm down -->
+            <line x1="44" y1="26" x2="38" y2="44" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <!-- Bicep highlighted -->
+            <ellipse cx="40" cy="38" rx="6" ry="4" fill="rgba(78,129,158,0.5)" stroke="#4E819E" stroke-width="1.5" transform="rotate(-70 40 38)"/>
+            <!-- Forearm curled up -->
+            <line x1="38" y1="44" x2="32" y2="34" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <!-- Dumbbell (left, curled) -->
+            <rect x="22" y="28" width="14" height="5" rx="2.5" fill="rgba(78,129,158,0.3)" stroke="#4E819E" stroke-width="1.2"/>
+            <!-- Right arm (hanging - showing full extension) -->
+            <line x1="56" y1="26" x2="62" y2="46" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <line x1="62" y1="46" x2="64" y2="66" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <!-- Dumbbell (right, down) -->
+            <rect x="56" y="64" width="14" height="5" rx="2.5" fill="rgba(78,129,158,0.2)" stroke="#4E819E" stroke-width="1"/>
+            <!-- Legs -->
+            <line x1="46" y1="56" x2="42" y2="80" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <line x1="54" y1="56" x2="58" y2="80" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <line x1="36" y1="80" x2="48" y2="80" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <line x1="52" y1="80" x2="64" y2="80" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <!-- Arrow on curl -->
+            <path d="M42 26 C36 22 32 30 36 36" stroke="#4E819E" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="card-info">
+          <div class="exercise-number">06 / Wednesday</div>
+          <div class="exercise-name">Dumbbell Bicep Curl</div>
+          <div class="sets-badge" style="background:rgba(78,129,158,0.15); color:var(--wed)">3 × 12 reps</div>
+          <div class="muscles">
+            <span class="muscle-tag" style="color:var(--wed); border-color:rgba(78,129,158,0.4)">Biceps ★</span>
+            <span class="muscle-tag" style="color:var(--muted); border-color:rgba(138,122,104,0.3)">Forearms</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-toggle">+</div>
+      <div class="card-body">
+        <div class="instructions-label">How to do it</div>
+        <ul class="steps">
+          <li><span class="step-num" style="background:var(--wed)">1</span> Stand holding dumbbells at your sides, palms facing forward, arms fully extended. Keep upper arms pinned to your sides.</li>
+          <li><span class="step-num" style="background:var(--wed)">2</span> Curl both dumbbells up toward your shoulders, rotating palms upward as you lift.</li>
+          <li><span class="step-num" style="background:var(--wed)">3</span> Squeeze at the top for 1 second. Then lower with complete control — don't drop them.</li>
+          <li><span class="step-num" style="background:var(--wed)">4</span> Reach full extension at the bottom every single rep — don't shortcut the range of motion.</li>
+        </ul>
+        <div class="tip" style="background:rgba(78,129,158,0.08); border-color:var(--wed)">
+          💡 No swinging. If your body sways to lift the weight, it's too heavy. Drop down 2kg — controlled reps build far more than heavy sloppy ones.
+        </div>
+      </div>
+    </div>
+
+    <!-- 14. Tricep Overhead Extension -->
+    <div class="card" style="--card-color: var(--wed)" onclick="toggleCard(this)">
+      <div class="card-top">
+        <div class="exercise-svg" style="background:rgba(78,129,158,0.08)">
+          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Dumbbell overhead -->
+            <rect x="36" y="5" width="28" height="6" rx="3" fill="rgba(78,129,158,0.3)" stroke="#4E819E" stroke-width="1.2"/>
+            <!-- Head -->
+            <circle cx="50" cy="22" r="7" fill="none" stroke="#F0E6D3" stroke-width="1.8"/>
+            <!-- Torso -->
+            <line x1="50" y1="29" x2="50" y2="62" stroke="#F0E6D3" stroke-width="2.2" stroke-linecap="round"/>
+            <!-- Arms bent overhead (elbows up) -->
+            <!-- Left upper arm (up) -->
+            <line x1="46" y1="30" x2="42" y2="18" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <!-- Left forearm (bent back) -->
+            <line x1="42" y1="18" x2="38" y2="8" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <!-- Right upper arm -->
+            <line x1="54" y1="30" x2="58" y2="18" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <!-- Right forearm -->
+            <line x1="58" y1="18" x2="62" y2="8" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <!-- Triceps highlighted -->
+            <ellipse cx="42" cy="22" rx="5" ry="7" fill="rgba(78,129,158,0.45)" stroke="#4E819E" stroke-width="1.3" transform="rotate(-20 42 22)"/>
+            <ellipse cx="58" cy="22" rx="5" ry="7" fill="rgba(78,129,158,0.45)" stroke="#4E819E" stroke-width="1.3" transform="rotate(20 58 22)"/>
+            <!-- Elbow markers -->
+            <circle cx="42" cy="18" r="2.5" fill="none" stroke="#4E819E" stroke-width="1.2"/>
+            <circle cx="58" cy="18" r="2.5" fill="none" stroke="#4E819E" stroke-width="1.2"/>
+            <!-- Legs -->
+            <line x1="46" y1="62" x2="42" y2="85" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <line x1="54" y1="62" x2="58" y2="85" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <line x1="36" y1="85" x2="48" y2="85" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <line x1="52" y1="85" x2="64" y2="85" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="card-info">
+          <div class="exercise-number">07 / Wednesday</div>
+          <div class="exercise-name">Tricep Overhead Extension</div>
+          <div class="sets-badge" style="background:rgba(78,129,158,0.15); color:var(--wed)">3 × 12 reps</div>
+          <div class="muscles">
+            <span class="muscle-tag" style="color:var(--wed); border-color:rgba(78,129,158,0.4)">Triceps ★★</span>
+            <span class="muscle-tag" style="color:var(--muted); border-color:rgba(138,122,104,0.3)">Shoulders</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-toggle">+</div>
+      <div class="card-body">
+        <div class="instructions-label">How to do it</div>
+        <ul class="steps">
+          <li><span class="step-num" style="background:var(--wed)">1</span> Stand or sit holding one dumbbell with both hands overhead. Arms straight, gripping the top plate with thumbs hooked around the handle.</li>
+          <li><span class="step-num" style="background:var(--wed)">2</span> Keeping your upper arms locked in place close to your head, bend at the elbows to lower the dumbbell behind your head.</li>
+          <li><span class="step-num" style="background:var(--wed)">3</span> Lower until you feel a deep stretch in your triceps. Elbows point forward, close to your head throughout.</li>
+          <li><span class="step-num" style="background:var(--wed)">4</span> Press back up to full arm extension. Breathe out at the top.</li>
+        </ul>
+        <div class="tip" style="background:rgba(78,129,158,0.08); border-color:var(--wed)">
+          💡 Targets the back of the upper arm — a very common goal for women. Keep your core braced and ribs down — it's easy to arch your back as you press up.
+        </div>
+      </div>
+    </div>
+
+    <!-- 15. Dead Bug -->
+    <div class="card" style="--card-color: var(--wed)" onclick="toggleCard(this)">
+      <div class="card-top">
+        <div class="exercise-svg" style="background:rgba(78,129,158,0.08)">
+          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Floor -->
+            <line x1="5" y1="70" x2="95" y2="70" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+            <!-- Body on back -->
+            <!-- Head -->
+            <circle cx="82" cy="62" r="7" fill="none" stroke="#F0E6D3" stroke-width="1.8"/>
+            <!-- Torso (core highlighted) -->
+            <rect x="30" y="58" width="44" height="12" rx="6" fill="rgba(78,129,158,0.3)" stroke="#4E819E" stroke-width="1.5"/>
+            <!-- Right arm extended up -->
+            <line x1="72" y1="60" x2="72" y2="35" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="72" cy="35" r="3" fill="none" stroke="#4E819E" stroke-width="1"/>
+            <!-- Left arm extended behind (lowering) -->
+            <line x1="32" y1="60" x2="15" y2="46" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+            <circle cx="15" cy="46" r="3" fill="none" stroke="#4E819E" stroke-width="1" stroke-dasharray="2 1"/>
+            <!-- Right knee up (90°) -->
+            <line x1="70" y1="68" x2="75" y2="52" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="75" cy="52" r="3" fill="none" stroke="#F0E6D3" stroke-width="1.2"/>
+            <line x1="75" y1="52" x2="88" y2="52" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <!-- Left leg extending (lowering) -->
+            <line x1="34" y1="68" x2="18" y2="68" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+            <line x1="18" y1="68" x2="10" y2="55" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+            <!-- Back flat on floor indicator -->
+            <text x="38" y="80" font-size="6" fill="rgba(78,129,158,0.7)" font-family="Outfit">back flat → floor</text>
+            <!-- Arrows showing movement -->
+            <path d="M72 42 L72 38" stroke="#4E819E" stroke-width="1" stroke-linecap="round"/>
+            <path d="M16 52 L14 48" stroke="#4E819E" stroke-width="1" stroke-linecap="round" opacity="0.6"/>
+          </svg>
+        </div>
+        <div class="card-info">
+          <div class="exercise-number">08 / Wednesday</div>
+          <div class="exercise-name">Dead Bug</div>
+          <div class="sets-badge" style="background:rgba(78,129,158,0.15); color:var(--wed)">3 × 8 each side</div>
+          <div class="muscles">
+            <span class="muscle-tag" style="color:var(--wed); border-color:rgba(78,129,158,0.4)">Deep Core ★</span>
+            <span class="muscle-tag" style="color:var(--muted); border-color:rgba(138,122,104,0.3)">Lower Back</span>
+            <span class="muscle-tag" style="color:var(--muted); border-color:rgba(138,122,104,0.3)">Hip Flexors</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-toggle">+</div>
+      <div class="card-body">
+        <div class="instructions-label">How to do it</div>
+        <ul class="steps">
+          <li><span class="step-num" style="background:var(--wed)">1</span> Lie on your back, arms straight up toward ceiling, knees bent at 90° and lifted (like a table-top).</li>
+          <li><span class="step-num" style="background:var(--wed)">2</span> Inhale. As you exhale, simultaneously lower your RIGHT arm behind your head AND your LEFT leg toward the floor.</li>
+          <li><span class="step-num" style="background:var(--wed)">3</span> Stop just BEFORE your arm and leg touch the floor. Breathe in. Return to start.</li>
+          <li><span class="step-num" style="background:var(--wed)">4</span> Repeat on the opposite side. That's one rep each side. Move slowly — this is not a speed exercise.</li>
+        </ul>
+        <div class="tip" style="background:rgba(78,129,158,0.08); border-color:var(--wed)">
+          💡 Your lower back must stay flat on the mat the ENTIRE time. If it lifts off, you've gone too far — shorten your range of motion until it stays down.
+        </div>
+      </div>
+    </div>
+
+    <!-- 16. Side Plank -->
+    <div class="card" style="--card-color: var(--wed)" onclick="toggleCard(this)">
+      <div class="card-top">
+        <div class="exercise-svg" style="background:rgba(78,129,158,0.08)">
+          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Floor -->
+            <line x1="5" y1="78" x2="95" y2="78" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+            <!-- Side plank position -->
+            <!-- Head -->
+            <circle cx="80" cy="40" r="7" fill="none" stroke="#F0E6D3" stroke-width="1.8"/>
+            <!-- Body straight line -->
+            <line x1="73" y1="44" x2="20" y2="72" stroke="#F0E6D3" stroke-width="3" stroke-linecap="round"/>
+            <!-- Obliques / waist highlighted -->
+            <ellipse cx="46" cy="58" rx="14" ry="6" fill="rgba(78,129,158,0.35)" stroke="#4E819E" stroke-width="1.5" transform="rotate(-29 46 58)"/>
+            <!-- Supporting arm (elbow on floor) -->
+            <line x1="56" y1="64" x2="56" y2="78" stroke="#F0E6D3" stroke-width="2.5" stroke-linecap="round"/>
+            <!-- Elbow -->
+            <circle cx="56" cy="78" r="4" fill="none" stroke="#F0E6D3" stroke-width="1.8"/>
+            <!-- Top arm raised -->
+            <line x1="60" y1="48" x2="60" y2="30" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <!-- Feet stacked -->
+            <ellipse cx="20" cy="76" rx="6" ry="3" fill="none" stroke="#F0E6D3" stroke-width="1.5"/>
+            <!-- Straight line indicator -->
+            <path d="M16 42 L84 42" stroke="rgba(78,129,158,0.2)" stroke-width="1" stroke-dasharray="3 3"/>
+            <!-- Hip up indicator -->
+            <path d="M46 52 L46 46 L50 50 M46 46 L42 50" stroke="#4E819E" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="card-info">
+          <div class="exercise-number">09 / Wednesday</div>
+          <div class="exercise-name">Side Plank</div>
+          <div class="sets-badge" style="background:rgba(78,129,158,0.15); color:var(--wed)">3 × 20–30 sec each side</div>
+          <div class="muscles">
+            <span class="muscle-tag" style="color:var(--wed); border-color:rgba(78,129,158,0.4)">Obliques ★</span>
+            <span class="muscle-tag" style="color:var(--muted); border-color:rgba(138,122,104,0.3)">Hip Abductors</span>
+            <span class="muscle-tag" style="color:var(--muted); border-color:rgba(138,122,104,0.3)">Core</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-toggle">+</div>
+      <div class="card-body">
+        <div class="instructions-label">How to do it</div>
+        <ul class="steps">
+          <li><span class="step-num" style="background:var(--wed)">1</span> Lie on your side with your elbow directly under your shoulder. Stack both feet on top of each other.</li>
+          <li><span class="step-num" style="background:var(--wed)">2</span> Lift your hips off the floor until your body forms a straight diagonal line from head to foot.</li>
+          <li><span class="step-num" style="background:var(--wed)">3</span> Hold — breathe steadily. Your hips should NOT drop or pike up. Top arm can rest on hip or reach up.</li>
+          <li><span class="step-num" style="background:var(--wed)">4</span> Lower with control. Switch sides and repeat.</li>
+        </ul>
+        <div class="tip" style="background:rgba(78,129,158,0.08); border-color:var(--wed)">
+          💡 To progress: try adding hip dips (slowly lower your hip toward the floor and raise back up) or lifting your top leg while holding the plank.
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end wednesday grid -->
+</div>
+
+
+<!-- ══════════════════════════════════════════ -->
+<!-- FRIDAY SESSION -->
+<!-- ══════════════════════════════════════════ -->
+<div class="session-panel" id="session-fri">
+  <div class="session-header">
+    <div class="session-day" style="color:var(--fri)">Friday</div>
+    <div class="session-title">Full Body with Glute Focus</div>
+    <div class="session-meta">8 exercises · Compound movements + glute finisher · End the week strong</div>
+  </div>
+
+  <div class="grid">
+
+    <!-- 17. Barbell Deadlift -->
+    <div class="card" style="--card-color: var(--fri)" onclick="toggleCard(this)">
+      <div class="card-top">
+        <div class="exercise-svg" style="background:rgba(107,153,88,0.08)">
+          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Barbell on floor -->
+            <rect x="18" y="76" width="64" height="5" rx="2.5" fill="rgba(107,153,88,0.2)" stroke="#6B9958" stroke-width="1.5"/>
+            <rect x="10" y="70" width="9" height="16" rx="3" fill="rgba(107,153,88,0.3)" stroke="#6B9958" stroke-width="1"/>
+            <rect x="81" y="70" width="9" height="16" rx="3" fill="rgba(107,153,88,0.3)" stroke="#6B9958" stroke-width="1"/>
+            <!-- Person in lift starting position -->
+            <!-- Head -->
+            <circle cx="50" cy="20" r="7" fill="none" stroke="#F0E6D3" stroke-width="1.8"/>
+            <!-- Torso (hinged) -->
+            <line x1="50" y1="27" x2="50" y2="50" stroke="#F0E6D3" stroke-width="2.2" stroke-linecap="round"/>
+            <!-- Back (full body highlighted) -->
+            <rect x="40" y="40" width="20" height="12" rx="4" fill="rgba(107,153,88,0.25)" stroke="#6B9958" stroke-width="1.2"/>
+            <!-- Arms gripping bar -->
+            <line x1="45" y1="42" x2="32" y2="76" stroke="#F0E6D3" stroke-width="1.8" stroke-linecap="round"/>
+            <line x1="55" y1="42" x2="68" y2="76" stroke="#F0E6D3" stroke-width="1.8" stroke-linecap="round"/>
+            <!-- Hips (glutes highlighted) -->
+            <ellipse cx="50" cy="52" rx="9" ry="5" fill="rgba(107,153,88,0.35)" stroke="#6B9958" stroke-width="1.2"/>
+            <!-- Legs (hamstrings highlighted) -->
+            <path d="M44 54 Q38 64 36 78" stroke="#6B9958" stroke-width="2.5" stroke-linecap="round" opacity="0.8"/>
+            <path d="M56 54 Q62 64 64 78" stroke="#6B9958" stroke-width="2.5" stroke-linecap="round" opacity="0.8"/>
+            <!-- Lift arrow -->
+            <path d="M78 50 L78 36 L82 40 M78 36 L74 40" stroke="#6B9958" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+            <!-- "FULL BODY" label -->
+            <text x="15" y="18" font-size="6" fill="rgba(107,153,88,0.8)" font-family="Outfit" font-weight="500">FULL BODY</text>
+          </svg>
+        </div>
+        <div class="card-info">
+          <div class="exercise-number">01 / Friday</div>
+          <div class="exercise-name">Barbell Deadlift</div>
+          <div class="sets-badge" style="background:rgba(107,153,88,0.15); color:var(--fri)">4 × 8 reps</div>
+          <div class="muscles">
+            <span class="muscle-tag" style="color:var(--fri); border-color:rgba(107,153,88,0.4)">Full Body ★★</span>
+            <span class="muscle-tag" style="color:var(--fri); border-color:rgba(107,153,88,0.4)">Glutes ★</span>
+            <span class="muscle-tag" style="color:var(--fri); border-color:rgba(107,153,88,0.4)">Hamstrings ★</span>
+            <span class="muscle-tag" style="color:var(--muted); border-color:rgba(138,122,104,0.3)">Back</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-toggle">+</div>
+      <div class="card-body">
+        <div class="instructions-label">How to do it</div>
+        <ul class="steps">
+          <li><span class="step-num" style="background:var(--fri)">1</span> Stand with the bar over your mid-foot. Hinge at the hips to grip the bar just outside your shins. Hips higher than knees, shoulders above hips.</li>
+          <li><span class="step-num" style="background:var(--fri)">2</span> Take a deep breath and brace your core hard — like you're about to get punched. Chest up, back flat.</li>
+          <li><span class="step-num" style="background:var(--fri)">3</span> Drive the floor away with your legs. Once the bar passes your knees, drive your hips forward to stand tall. Bar stays close to your body throughout.</li>
+          <li><span class="step-num" style="background:var(--fri)">4</span> To lower: hinge at the hips first, then bend the knees when the bar passes them. Controlled descent.</li>
+        </ul>
+        <div class="tip" style="background:rgba(107,153,88,0.08); border-color:var(--fri)">
+          ⭐ The most effective full-body exercise available to you. Start light and nail the form — the rewards compound significantly as you add weight over weeks and months.
+        </div>
+      </div>
+    </div>
+
+    <!-- 18. Hip Thrust (Friday) -->
+    <div class="card" style="--card-color: var(--fri)" onclick="toggleCard(this)">
+      <div class="card-top">
+        <div class="exercise-svg" style="background:rgba(107,153,88,0.08)">
+          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Same as Monday but green -->
+            <rect x="10" y="60" width="35" height="8" rx="2" fill="rgba(107,153,88,0.25)" stroke="#6B9958" stroke-width="1.2"/>
+            <rect x="15" y="42" width="70" height="5" rx="2.5" fill="rgba(107,153,88,0.2)" stroke="#6B9958" stroke-width="1.5"/>
+            <rect x="10" y="38" width="8" height="14" rx="2" fill="rgba(107,153,88,0.3)" stroke="#6B9958" stroke-width="1"/>
+            <rect x="82" y="38" width="8" height="14" rx="2" fill="rgba(107,153,88,0.3)" stroke="#6B9958" stroke-width="1"/>
+            <line x1="32" y1="44" x2="55" y2="55" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="28" cy="56" r="7" fill="none" stroke="#F0E6D3" stroke-width="1.8"/>
+            <ellipse cx="55" cy="44" rx="8" ry="6" fill="rgba(107,153,88,0.45)" stroke="#6B9958" stroke-width="1.5"/>
+            <line x1="55" y1="50" x2="60" y2="75" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <line x1="60" y1="75" x2="60" y2="90" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <line x1="55" y1="90" x2="66" y2="90" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <!-- Volume badge -->
+            <rect x="62" y="8" width="30" height="14" rx="7" fill="rgba(107,153,88,0.2)" stroke="#6B9958" stroke-width="1"/>
+            <text x="68" y="18" font-size="7" fill="#6B9958" font-family="Outfit" font-weight="500">Vol. #2</text>
+          </svg>
+        </div>
+        <div class="card-info">
+          <div class="exercise-number">02 / Friday</div>
+          <div class="exercise-name">Barbell Hip Thrust</div>
+          <div class="sets-badge" style="background:rgba(107,153,88,0.15); color:var(--fri)">3 × 15 reps</div>
+          <div class="muscles">
+            <span class="muscle-tag" style="color:var(--fri); border-color:rgba(107,153,88,0.4)">Glutes ★★</span>
+            <span class="muscle-tag" style="color:var(--muted); border-color:rgba(138,122,104,0.3)">Hamstrings</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-toggle">+</div>
+      <div class="card-body">
+        <div class="instructions-label">How to do it</div>
+        <ul class="steps">
+          <li><span class="step-num" style="background:var(--fri)">1</span> Upper back on bench, barbell across hips with pad. Feet flat, hip-width, knees at 90°.</li>
+          <li><span class="step-num" style="background:var(--fri)">2</span> Drive hips explosively upward to parallel. Full squeeze at the top for 1 second.</li>
+          <li><span class="step-num" style="background:var(--fri)">3</span> Lower slowly with control. Don't let your hips drop fast — the controlled descent counts.</li>
+          <li><span class="step-num" style="background:var(--fri)">4</span> Higher rep target today (15) — go slightly lighter than Monday if needed, but hit all the reps.</li>
+        </ul>
+        <div class="tip" style="background:rgba(107,153,88,0.08); border-color:var(--fri)">
+          💡 This is your second hip thrust session this week — glutes respond well to volume. Slightly lighter than Monday's weight is fine; the higher reps are the point.
+        </div>
+      </div>
+    </div>
+
+    <!-- 19. Goblet Squat -->
+    <div class="card" style="--card-color: var(--fri)" onclick="toggleCard(this)">
+      <div class="card-top">
+        <div class="exercise-svg" style="background:rgba(107,153,88,0.08)">
+          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Dumbbell at chest -->
+            <rect x="36" y="36" width="28" height="8" rx="4" fill="rgba(107,153,88,0.3)" stroke="#6B9958" stroke-width="1.5"/>
+            <!-- Head -->
+            <circle cx="50" cy="20" r="7" fill="none" stroke="#F0E6D3" stroke-width="1.8"/>
+            <!-- Torso (upright, chest tall) -->
+            <line x1="50" y1="27" x2="50" y2="52" stroke="#F0E6D3" stroke-width="2.2" stroke-linecap="round"/>
+            <!-- Arms holding dumbbell -->
+            <line x1="44" y1="34" x2="36" y2="40" stroke="#F0E6D3" stroke-width="1.8" stroke-linecap="round"/>
+            <line x1="56" y1="34" x2="64" y2="40" stroke="#F0E6D3" stroke-width="1.8" stroke-linecap="round"/>
+            <!-- Hips/glutes highlighted -->
+            <ellipse cx="50" cy="52" rx="10" ry="6" fill="rgba(107,153,88,0.35)" stroke="#6B9958" stroke-width="1.2"/>
+            <!-- Quads highlighted -->
+            <path d="M44 55 Q34 68 30 78" stroke="#6B9958" stroke-width="2.5" stroke-linecap="round" opacity="0.9"/>
+            <path d="M56 55 Q66 68 70 78" stroke="#6B9958" stroke-width="2.5" stroke-linecap="round" opacity="0.9"/>
+            <!-- Shins -->
+            <line x1="30" y1="78" x2="26" y2="94" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <line x1="70" y1="78" x2="74" y2="94" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <!-- Feet wide -->
+            <line x1="20" y1="94" x2="32" y2="94" stroke="#F0E6D3" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="68" y1="94" x2="80" y2="94" stroke="#F0E6D3" stroke-width="2.5" stroke-linecap="round"/>
+            <!-- Upright chest indicator -->
+            <path d="M62 22 L68 22" stroke="rgba(107,153,88,0.5)" stroke-width="1" stroke-dasharray="2 1"/>
+            <text x="68" y="25" font-size="6" fill="rgba(107,153,88,0.7)" font-family="Outfit">chest up</text>
+          </svg>
+        </div>
+        <div class="card-info">
+          <div class="exercise-number">03 / Friday</div>
+          <div class="exercise-name">Goblet Squat</div>
+          <div class="sets-badge" style="background:rgba(107,153,88,0.15); color:var(--fri)">3 × 12 reps</div>
+          <div class="muscles">
+            <span class="muscle-tag" style="color:var(--fri); border-color:rgba(107,153,88,0.4)">Quads ★</span>
+            <span class="muscle-tag" style="color:var(--fri); border-color:rgba(107,153,88,0.4)">Glutes ★</span>
+            <span class="muscle-tag" style="color:var(--muted); border-color:rgba(138,122,104,0.3)">Core</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-toggle">+</div>
+      <div class="card-body">
+        <div class="instructions-label">How to do it</div>
+        <ul class="steps">
+          <li><span class="step-num" style="background:var(--fri)">1</span> Hold one heavy dumbbell vertically at your chest, cupping the top with both hands. Feet shoulder-width, toes angled slightly out.</li>
+          <li><span class="step-num" style="background:var(--fri)">2</span> Squat deep — the weight at your chest acts as a counterbalance, making it easier to stay upright and go deeper.</li>
+          <li><span class="step-num" style="background:var(--fri)">3</span> Keep your chest tall and knees tracking over your toes throughout. Elbows can lightly touch the inside of your knees at the bottom.</li>
+          <li><span class="step-num" style="background:var(--fri)">4</span> Drive through your heels to stand. Breathe out at the top.</li>
+        </ul>
+        <div class="tip" style="background:rgba(107,153,88,0.08); border-color:var(--fri)">
+          💡 One of the best squat variations for learning proper mechanics. The counterweight makes it much easier to maintain an upright chest and squat deep simultaneously.
+        </div>
+      </div>
+    </div>
+
+    <!-- 20. Single-Leg RDL -->
+    <div class="card" style="--card-color: var(--fri)" onclick="toggleCard(this)">
+      <div class="card-top">
+        <div class="exercise-svg" style="background:rgba(107,153,88,0.08)">
+          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Dumbbell hanging -->
+            <rect x="24" y="72" width="16" height="5" rx="2.5" fill="rgba(107,153,88,0.3)" stroke="#6B9958" stroke-width="1.2"/>
+            <!-- Head -->
+            <circle cx="70" cy="18" r="7" fill="none" stroke="#F0E6D3" stroke-width="1.8"/>
+            <!-- Torso hinged forward -->
+            <line x1="64" y1="22" x2="50" y2="48" stroke="#F0E6D3" stroke-width="2.2" stroke-linecap="round"/>
+            <!-- Arm with dumbbell -->
+            <line x1="56" y1="38" x2="32" y2="72" stroke="#F0E6D3" stroke-width="1.8" stroke-linecap="round"/>
+            <!-- Standing leg (vertical) -->
+            <line x1="50" y1="48" x2="48" y2="68" stroke="#F0E6D3" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="48" y1="68" x2="44" y2="92" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <line x1="38" y1="92" x2="50" y2="92" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <!-- Hamstrings of standing leg highlighted -->
+            <path d="M50 50 Q52 60 50 70" stroke="#6B9958" stroke-width="3" stroke-linecap="round" opacity="0.8"/>
+            <!-- Hip (glute) highlighted -->
+            <ellipse cx="50" cy="48" rx="7" ry="5" fill="rgba(107,153,88,0.4)" stroke="#6B9958" stroke-width="1.3"/>
+            <!-- Back leg floating for balance -->
+            <path d="M52 50 Q65 58 72 52" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+            <line x1="72" y1="52" x2="82" y2="48" stroke="#F0E6D3" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+            <!-- Balance indicator -->
+            <path d="M40 30 C44 28 46 32 44 34" stroke="#6B9958" stroke-width="1" fill="none" stroke-linecap="round"/>
+            <text x="30" y="28" font-size="6" fill="rgba(107,153,88,0.7)" font-family="Outfit">balance</text>
+          </svg>
+        </div>
+        <div class="card-info">
+          <div class="exercise-number">04 / Friday</div>
+          <div class="exercise-name">Single-Leg Romanian Deadlift</div>
+          <div class="sets-badge" style="background:rgba(107,153,88,0.15); color:var(--fri)">3 × 10 each leg</div>
+          <div class="muscles">
+            <span class="muscle-tag" style="color:var(--fri); border-color:rgba(107,153,88,0.4)">Hamstrings ★</span>
+            <span class="muscle-tag" style="color:var(--fri); border-color:rgba(107,153,88,0.4)">Glutes ★</span>
+            <span class="muscle-tag" style="color:var(--muted); border-color:rgba(138,122,104,0.3)">Balance</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-toggle">+</div>
+      <div class="card-body">
+        <div class="instructions-label">How to do it</div>
+        <ul class="steps">
+          <li><span class="step-num" style="background:var(--fri)">1</span> Stand on one leg, holding a dumbbell in the OPPOSITE hand (left leg = right hand dumbbell).</li>
+          <li><span class="step-num" style="background:var(--fri)">2</span> Keeping your standing leg mostly straight, hinge at the hip and let your non-standing leg float back behind you for balance.</li>
+          <li><span class="step-num" style="background:var(--fri)">3</span> Lower the dumbbell toward the floor — as far as your hamstring stretch allows. Keep hips square (don't let one side rotate open).</li>
+          <li><span class="step-num" style="background:var(--fri)">4</span> Drive through the heel of your standing foot and squeeze your glute to return to standing. Complete all reps, then switch legs.</li>
+        </ul>
+        <div class="tip" style="background:rgba(107,153,88,0.08); border-color:var(--fri)">
+          💡 This will expose imbalances between sides — don't be alarmed if one is weaker. It corrects itself surprisingly quickly. Use a wall for balance if needed.
+        </div>
+      </div>
+    </div>
+
+    <!-- 21. Dumbbell Step-Ups -->
+    <div class="card" style="--card-color: var(--fri)" onclick="toggleCard(this)">
+      <div class="card-top">
+        <div class="exercise-svg" style="background:rgba(107,153,88,0.08)">
+          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Bench/step -->
+            <rect x="30" y="65" width="50" height="10" rx="2" fill="rgba(107,153,88,0.2)" stroke="#6B9958" stroke-width="1.5"/>
+            <!-- Dumbbells -->
+            <rect x="12" y="48" width="14" height="5" rx="2.5" fill="rgba(107,153,88,0.3)" stroke="#6B9958" stroke-width="1.2"/>
+            <rect x="74" y="48" width="14" height="5" rx="2.5" fill="rgba(107,153,88,0.3)" stroke="#6B9958" stroke-width="1.2"/>
+            <!-- Head -->
+            <circle cx="55" cy="18" r="7" fill="none" stroke="#F0E6D3" stroke-width="1.8"/>
+            <!-- Torso upright -->
+            <line x1="55" y1="25" x2="55" y2="52" stroke="#F0E6D3" stroke-width="2.2" stroke-linecap="round"/>
+            <!-- Arms -->
+            <line x1="50" y1="30" x2="26" y2="50" stroke="#F0E6D3" stroke-width="1.8" stroke-linecap="round"/>
+            <line x1="60" y1="30" x2="74" y2="50" stroke="#F0E6D3" stroke-width="1.8" stroke-linecap="round"/>
+            <!-- Front/working leg (on bench, glute highlighted) -->
+            <path d="M51 52 Q46 58 42 65" stroke="#6B9958" stroke-width="2.5" stroke-linecap="round" opacity="0.9"/>
+            <!-- Glute highlighted -->
+            <ellipse cx="51" cy="52" rx="7" ry="5" fill="rgba(107,153,88,0.4)" stroke="#6B9958" stroke-width="1.2"/>
+            <!-- Shin of working leg (on bench) -->
+            <line x1="42" y1="65" x2="38" y2="75" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <!-- Foot flat on bench -->
+            <line x1="32" y1="65" x2="46" y2="65" stroke="#F0E6D3" stroke-width="2.5" stroke-linecap="round"/>
+            <!-- Trailing leg -->
+            <line x1="59" y1="52" x2="66" y2="75" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+            <line x1="66" y1="75" x2="70" y2="95" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+            <!-- Heel drive arrow -->
+            <path d="M38 72 L38 60 L42 64 M38 60 L34 64" stroke="#6B9958" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+            <text x="14" y="90" font-size="6" fill="rgba(107,153,88,0.7)" font-family="Outfit">drive through heel</text>
+          </svg>
+        </div>
+        <div class="card-info">
+          <div class="exercise-number">05 / Friday</div>
+          <div class="exercise-name">Dumbbell Step-Ups</div>
+          <div class="sets-badge" style="background:rgba(107,153,88,0.15); color:var(--fri)">3 × 12 each leg</div>
+          <div class="muscles">
+            <span class="muscle-tag" style="color:var(--fri); border-color:rgba(107,153,88,0.4)">Glutes ★</span>
+            <span class="muscle-tag" style="color:var(--fri); border-color:rgba(107,153,88,0.4)">Quads ★</span>
+            <span class="muscle-tag" style="color:var(--muted); border-color:rgba(138,122,104,0.3)">Balance</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-toggle">+</div>
+      <div class="card-body">
+        <div class="instructions-label">How to do it</div>
+        <ul class="steps">
+          <li><span class="step-num" style="background:var(--fri)">1</span> Hold dumbbells at your sides. Place your full foot on a bench or sturdy box — not just your toes.</li>
+          <li><span class="step-num" style="background:var(--fri)">2</span> Drive through the HEEL of your working foot to stand on top of the bench. Your trailing leg should not push off the floor.</li>
+          <li><span class="step-num" style="background:var(--fri)">3</span> Stand fully at the top, then slowly lower the trailing leg back down — controlled descent.</li>
+          <li><span class="step-num" style="background:var(--fri)">4</span> Complete all reps on one leg before switching. This keeps more tension on the working glute.</li>
+        </ul>
+        <div class="tip" style="background:rgba(107,153,88,0.08); border-color:var(--fri)">
+          💡 Drive through the HEEL — this is everything. If you push through your toes, it becomes a quad exercise instead of a glute exercise. Feel the difference consciously.
+        </div>
+      </div>
+    </div>
+
+    <!-- 22. Push-Ups -->
+    <div class="card" style="--card-color: var(--fri)" onclick="toggleCard(this)">
+      <div class="card-top">
+        <div class="exercise-svg" style="background:rgba(107,153,88,0.08)">
+          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Floor -->
+            <line x1="5" y1="80" x2="95" y2="80" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+            <!-- Push-up position (side view) -->
+            <!-- Head -->
+            <circle cx="85" cy="42" r="7" fill="none" stroke="#F0E6D3" stroke-width="1.8"/>
+            <!-- Torso straight -->
+            <line x1="78" y1="46" x2="30" y2="62" stroke="#F0E6D3" stroke-width="2.5" stroke-linecap="round"/>
+            <!-- Chest highlighted -->
+            <ellipse cx="68" cy="50" rx="12" ry="5" fill="rgba(107,153,88,0.3)" stroke="#6B9958" stroke-width="1.2" transform="rotate(-18 68 50)"/>
+            <!-- Triceps highlighted -->
+            <ellipse cx="72" cy="54" rx="8" ry="4" fill="rgba(107,153,88,0.2)" stroke="#6B9958" stroke-width="1" transform="rotate(-18 72 54)"/>
+            <!-- Arm pressing -->
+            <line x1="72" y1="52" x2="72" y2="80" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <!-- Legs straight -->
+            <line x1="30" y1="62" x2="15" y2="68" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <line x1="15" y1="68" x2="10" y2="80" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <!-- Toes -->
+            <circle cx="10" cy="80" r="3" fill="none" stroke="#F0E6D3" stroke-width="1.5"/>
+            <!-- Straight body line -->
+            <path d="M8 36 L88 36" stroke="rgba(107,153,88,0.2)" stroke-width="1" stroke-dasharray="3 3"/>
+            <!-- Elbow angle -->
+            <path d="M72 65 Q82 60 78 52" stroke="#6B9958" stroke-width="1" stroke-linecap="round" fill="none"/>
+            <text x="60" y="94" font-size="6" fill="rgba(107,153,88,0.7)" font-family="Outfit">elbows ~45° to body</text>
+            <!-- Knees modification option -->
+            <text x="6" y="95" font-size="5.5" fill="rgba(240,230,211,0.35)" font-family="Outfit">knees ok!</text>
+          </svg>
+        </div>
+        <div class="card-info">
+          <div class="exercise-number">06 / Friday</div>
+          <div class="exercise-name">Push-Ups</div>
+          <div class="sets-badge" style="background:rgba(107,153,88,0.15); color:var(--fri)">3 × Max Reps</div>
+          <div class="muscles">
+            <span class="muscle-tag" style="color:var(--fri); border-color:rgba(107,153,88,0.4)">Chest ★</span>
+            <span class="muscle-tag" style="color:var(--fri); border-color:rgba(107,153,88,0.4)">Triceps ★</span>
+            <span class="muscle-tag" style="color:var(--muted); border-color:rgba(138,122,104,0.3)">Shoulders</span>
+            <span class="muscle-tag" style="color:var(--muted); border-color:rgba(138,122,104,0.3)">Core</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-toggle">+</div>
+      <div class="card-body">
+        <div class="instructions-label">How to do it</div>
+        <ul class="steps">
+          <li><span class="step-num" style="background:var(--fri)">1</span> Hands slightly wider than shoulders, fingers forward or slightly out. Body in a rigid straight line from head to toes.</li>
+          <li><span class="step-num" style="background:var(--fri)">2</span> Lower your chest toward the floor, keeping elbows at roughly 45° to your body — not flaring straight out.</li>
+          <li><span class="step-num" style="background:var(--fri)">3</span> Lower until your chest nearly touches the floor (full range of motion). Press back up until arms are straight.</li>
+          <li><span class="step-num" style="background:var(--fri)">4</span> Stop when form breaks down — that's your max for that set. Record your reps and aim to beat it next week.</li>
+        </ul>
+        <div class="tip" style="background:rgba(107,153,88,0.08); border-color:var(--fri)">
+          💡 Start on your knees if needed — there is zero shame in it. 3 perfect knee push-ups beats 10 sloppy full ones. Full push-ups typically come within 4–6 weeks of consistent training.
+        </div>
+      </div>
+    </div>
+
+    <!-- 23. Russian Twist -->
+    <div class="card" style="--card-color: var(--fri)" onclick="toggleCard(this)">
+      <div class="card-top">
+        <div class="exercise-svg" style="background:rgba(107,153,88,0.08)">
+          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Body seated, V-shape -->
+            <!-- Head -->
+            <circle cx="50" cy="24" r="7" fill="none" stroke="#F0E6D3" stroke-width="1.8"/>
+            <!-- Torso (leaning back slightly) -->
+            <line x1="50" y1="31" x2="50" y2="62" stroke="#F0E6D3" stroke-width="2.2" stroke-linecap="round"/>
+            <!-- Obliques highlighted -->
+            <ellipse cx="42" cy="46" rx="9" ry="5" fill="rgba(107,153,88,0.35)" stroke="#6B9958" stroke-width="1.2" transform="rotate(-15 42 46)"/>
+            <ellipse cx="58" cy="46" rx="9" ry="5" fill="rgba(107,153,88,0.35)" stroke="#6B9958" stroke-width="1.2" transform="rotate(15 58 46)"/>
+            <!-- Dumbbell (rotated to left side) -->
+            <rect x="18" y="48" width="18" height="6" rx="3" fill="rgba(107,153,88,0.3)" stroke="#6B9958" stroke-width="1.5"/>
+            <!-- Arms reaching to side -->
+            <line x1="44" y1="42" x2="24" y2="50" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <line x1="56" y1="42" x2="34" y2="50" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <!-- Legs lifted, knees bent -->
+            <path d="M46 62 Q36 70 30 80" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <path d="M54 62 Q64 70 70 80" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round"/>
+            <line x1="30" y1="80" x2="26" y2="95" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+            <line x1="70" y1="80" x2="74" y2="95" stroke="#F0E6D3" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+            <!-- Rotation arrow -->
+            <path d="M56 38 C62 34 66 40 62 44" stroke="#6B9958" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+            <path d="M62 44 L58 43 M62 44 L63 40" stroke="#6B9958" stroke-width="1.2" stroke-linecap="round"/>
+            <!-- "Rotate from torso" label -->
+            <text x="62" y="36" font-size="5.5" fill="rgba(107,153,88,0.7)" font-family="Outfit">torso rotates</text>
+          </svg>
+        </div>
+        <div class="card-info">
+          <div class="exercise-number">07 / Friday</div>
+          <div class="exercise-name">Russian Twist</div>
+          <div class="sets-badge" style="background:rgba(107,153,88,0.15); color:var(--fri)">3 × 12 each side</div>
+          <div class="muscles">
+            <span class="muscle-tag" style="color:var(--fri); border-color:rgba(107,153,88,0.4)">Obliques ★</span>
+            <span class="muscle-tag" style="color:var(--fri); border-color:rgba(107,153,88,0.4)">Core ★</span>
+            <span class="muscle-tag" style="color:var(--muted); border-color:rgba(138,122,104,0.3)">Hip Flexors</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-toggle">+</div>
+      <div class="card-body">
+        <div class="instructions-label">How to do it</div>
+        <ul class="steps">
+          <li><span class="step-num" style="background:var(--fri)">1</span> Sit on the floor with knees bent. Lean back slightly (about 45°) until your abs engage. Hold a dumbbell with both hands at your chest.</li>
+          <li><span class="step-num" style="background:var(--fri)">2</span> Lift your feet slightly off the floor (harder) or keep them grounded (easier to start).</li>
+          <li><span class="step-num" style="background:var(--fri)">3</span> Rotate your torso to the RIGHT, lowering the dumbbell toward the floor beside your right hip. Return to center. Rotate LEFT. That's one rep each side.</li>
+          <li><span class="step-num" style="background:var(--fri)">4</span> Keep the movement slow and controlled — this is not a speed exercise.</li>
+        </ul>
+        <div class="tip" style="background:rgba(107,153,88,0.08); border-color:var(--fri)">
+          💡 The rotation comes from your torso, not just your arms. Think of your arms following your chest as your ribcage turns. Controlled = more oblique activation.
+        </div>
+      </div>
+    </div>
+
+    <!-- 24. Glute Bridge Hold -->
+    <div class="card" style="--card-color: var(--fri)" onclick="toggleCard(this)">
+      <div class="card-top">
+        <div class="exercise-svg" style="background:rgba(107,153,88,0.08)">
+          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Floor -->
+            <line x1="5" y1="80" x2="95" y2="80" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+            <!-- Body in glute bridge hold -->
+            <!-- Head -->
+            <circle cx="82" cy="72" r="7" fill="none" stroke="#F0E6D3" stroke-width="1.8"/>
+            <!-- Shoulder to hip -->
+            <line x1="75" y1="74" x2="60" y2="60" stroke="#F0E6D3" stroke-width="2.5" stroke-linecap="round"/>
+            <!-- Glutes (hips at peak - heavily highlighted) -->
+            <ellipse cx="55" cy="55" rx="12" ry="8" fill="rgba(107,153,88,0.55)" stroke="#6B9958" stroke-width="2"/>
+            <!-- Thigh (down to knee) -->
+            <line x1="50" y1="62" x2="40" y2="78" stroke="#F0E6D3" stroke-width="2.2" stroke-linecap="round"/>
+            <!-- Knee -->
+            <circle cx="40" cy="78" r="3" fill="none" stroke="#F0E6D3" stroke-width="1.5"/>
+            <!-- Shin (vertical - feet flat) -->
+            <line x1="40" y1="78" x2="38" y2="80" stroke="#F0E6D3" stroke-width="2.2" stroke-linecap="round"/>
+            <!-- Foot flat -->
+            <line x1="30" y1="80" x2="42" y2="80" stroke="#F0E6D3" stroke-width="2.5" stroke-linecap="round"/>
+            <!-- Arms on floor -->
+            <line x1="72" y1="75" x2="55" y2="78" stroke="#F0E6D3" stroke-width="1.8" stroke-linecap="round"/>
+            <line x1="55" y1="78" x2="40" y2="78" stroke="#F0E6D3" stroke-width="1.8" stroke-linecap="round" opacity="0.5"/>
+            <!-- Hamstrings highlighted -->
+            <path d="M52 62 Q46 70 40 78" stroke="#6B9958" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+            <!-- "SQUEEZE" label with fire effect -->
+            <text x="58" y="46" font-size="7" fill="#6B9958" font-family="Outfit" font-weight="600">SQUEEZE</text>
+            <!-- Hold indicator -->
+            <rect x="10" y="12" width="30" height="14" rx="7" fill="rgba(107,153,88,0.2)" stroke="#6B9958" stroke-width="1"/>
+            <text x="14" y="22" font-size="7" fill="#6B9958" font-family="Outfit" font-weight="500">30 sec hold</text>
+          </svg>
+        </div>
+        <div class="card-info">
+          <div class="exercise-number">08 / Friday</div>
+          <div class="exercise-name">Glute Bridge Hold</div>
+          <div class="sets-badge" style="background:rgba(107,153,88,0.15); color:var(--fri)">3 × 30 sec hold</div>
+          <div class="muscles">
+            <span class="muscle-tag" style="color:var(--fri); border-color:rgba(107,153,88,0.4)">Glutes ★★</span>
+            <span class="muscle-tag" style="color:var(--muted); border-color:rgba(138,122,104,0.3)">Hamstrings</span>
+            <span class="muscle-tag" style="color:var(--muted); border-color:rgba(138,122,104,0.3)">Core</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-toggle">+</div>
+      <div class="card-body">
+        <div class="instructions-label">How to do it</div>
+        <ul class="steps">
+          <li><span class="step-num" style="background:var(--fri)">1</span> Lie on your back, knees bent, feet flat on the floor hip-width apart. Arms by your sides, palms down.</li>
+          <li><span class="step-num" style="background:var(--fri)">2</span> Drive your hips up until your body forms a straight line from shoulders to knees.</li>
+          <li><span class="step-num" style="background:var(--fri)">3</span> Squeeze your glutes as hard as you possibly can. Hold this squeeze for the full 30 seconds — breathe steadily.</li>
+          <li><span class="step-num" style="background:var(--fri)">4</span> Lower slowly after the hold. Rest briefly. Repeat for 3 sets.</li>
+        </ul>
+        <div class="tip" style="background:rgba(107,153,88,0.08); border-color:var(--fri)">
+          🔥 This is your burnout finisher — your glutes should be burning by now. That burn means the work is happening. Add a dumbbell on your hips as you get stronger.
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end friday grid -->
+
+  <div class="warning-banner" style="margin:48px 24px 0">
+    <strong>🔥 Week complete!</strong> Three sessions done — this is what consistent progressive overload looks like. Try to add a small amount of weight or one extra rep somewhere each week. That's how transformation happens.
+  </div>
+</div><!-- end friday panel -->
+
+
+<footer>
+  <p style="color:rgba(138,122,104,0.6); font-size:11px; letter-spacing:2px; text-transform:uppercase">Personal Use Only · Not Medical Advice · Share with your GP</p>
+</footer>
+
+<script>
+function showSession(session, btn) {
+  // Hide all panels
+  document.querySelectorAll('.session-panel').forEach(p => p.classList.remove('active'));
+  // Show target
+  document.getElementById('session-' + session).classList.add('active');
+  // Update tabs
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    b.className = 'tab-btn';
+  });
+  btn.classList.add('active-' + session);
+}
+
+function toggleCard(card) {
+  // Close others if desired (comment out for multiple open)
+  // document.querySelectorAll('.card.open').forEach(c => { if(c !== card) c.classList.remove('open'); });
+  card.classList.toggle('open');
+}
+
+// Stagger card entrance animation on session switch
+function animateCards() {
+  const activeCards = document.querySelectorAll('.session-panel.active .card');
+  activeCards.forEach((card, i) => {
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(20px)';
+    card.style.transition = 'none';
+    setTimeout(() => {
+      card.style.transition = 'opacity 0.4s ease, transform 0.4s ease, background 0.25s ease';
+      card.style.opacity = '1';
+      card.style.transform = 'translateY(0)';
+    }, i * 50);
+  });
+}
+// Run on load
+setTimeout(animateCards, 600);
+
+// Override showSession to include animation
+const origShow = showSession;
+window.showSession = function(session, btn) {
+  origShow(session, btn);
+  setTimeout(animateCards, 50);
+};
+</script>
+</body>
+</html>
