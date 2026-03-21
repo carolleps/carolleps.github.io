@@ -376,6 +376,130 @@ footer {
   to { opacity:1; transform:translateY(0); }
 }
 
+/* ── EMBEDDED VIDEO ── */
+/* ── VIDEO PLAYER ── */
+.video-embed-wrap {
+  margin-top: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: #000;
+}
+.video-embed-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: rgba(0,0,0,0.45);
+  font-family: 'Outfit', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.video-embed-label .vid-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.video-embed-label .vid-title svg {
+  width: 13px; height: 13px;
+  fill: #FF4444;
+  flex-shrink: 0;
+}
+.video-embed-label a {
+  color: var(--muted);
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  font-weight: 400;
+  font-size: 10px;
+  text-transform: none;
+  opacity: 0.55;
+  transition: opacity 0.2s, color 0.2s;
+}
+.video-embed-label a:hover { opacity: 1; color: var(--cream); }
+
+/* Thumbnail click-to-play */
+.video-thumb {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/9;
+  cursor: pointer;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.video-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: opacity 0.2s ease;
+}
+.video-thumb:hover img { opacity: 0.75; }
+.video-thumb .play-btn {
+  position: absolute;
+  width: 64px; height: 64px;
+  background: rgba(0,0,0,0.72);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, transform 0.15s ease;
+  pointer-events: none;
+}
+.video-thumb:hover .play-btn {
+  background: #FF0000;
+  transform: scale(1.1);
+}
+.video-thumb .play-btn svg {
+  width: 26px; height: 26px;
+  fill: #fff;
+  margin-left: 4px; /* optical centre for triangle */
+}
+
+/* Live iframe (after click) */
+.video-embed-wrap iframe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16/9;
+  border: none;
+  background: #000;
+}
+
+/* Search fallback pill */
+.video-search-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  background: rgba(0,0,0,0.2);
+}
+.video-search-fallback span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-family: 'Outfit', sans-serif;
+}
+.video-search-fallback span svg { width:13px; height:13px; fill:#FF4444; flex-shrink:0; }
+.video-search-fallback a {
+  font-size: 11px;
+  color: var(--muted);
+  opacity: 0.6;
+  text-decoration: none;
+  font-family: 'Outfit', sans-serif;
+  transition: opacity 0.2s, color 0.2s;
+}
+.video-search-fallback a:hover { opacity: 1; color: var(--cream); }
+
 /* ── PRINT ── */
 @media print {
   .tabs { display: none; }
@@ -423,7 +547,7 @@ footer {
   <div class="grid">
 
     <!-- 1. Barbell Hip Thrust -->
-    <div class="card" style="--card-color: var(--mon)" onclick="toggleCard(this)">
+    <div class="card" style="--card-color: var(--mon)" data-video="https://youtu.be/Zp26q4BY5HE?si=Sqkis6NGLvDfHGMg&t=57" onclick="toggleCard(this)">
       <div class="card-top">
         <div class="exercise-svg" style="background:rgba(196,98,45,0.08)">
           <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -477,7 +601,7 @@ footer {
     </div>
 
     <!-- 2. Barbell Back Squat -->
-    <div class="card" style="--card-color: var(--mon)" onclick="toggleCard(this)">
+    <div class="card" style="--card-color: var(--mon)" data-video="https://youtu.be/kRX2NfqM90g?si=HP95i0GzCaQmaT4p&t=20" onclick="toggleCard(this)">
       <div class="card-top">
         <div class="exercise-svg" style="background:rgba(196,98,45,0.08)">
           <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -534,7 +658,7 @@ footer {
     </div>
 
     <!-- 3. Romanian Deadlift -->
-    <div class="card" style="--card-color: var(--mon)" onclick="toggleCard(this)">
+    <div class="card" style="--card-color: var(--mon)" data-video="https://youtu.be/3VXmecChYYM?si=4x46Deun20vCkOIT&t=21" onclick="toggleCard(this)">
       <div class="card-top">
         <div class="exercise-svg" style="background:rgba(196,98,45,0.08)">
           <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -590,7 +714,7 @@ footer {
     </div>
 
     <!-- 4. Walking Lunges -->
-    <div class="card" style="--card-color: var(--mon)" onclick="toggleCard(this)">
+    <div class="card" style="--card-color: var(--mon)" data-video="https://youtu.be/wrwwXE_x-pQ?si=46MkXPjWNbN0SP9f&t=77" onclick="toggleCard(this)">
       <div class="card-top">
         <div class="exercise-svg" style="background:rgba(196,98,45,0.08)">
           <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -646,7 +770,7 @@ footer {
     </div>
 
     <!-- 5. Banded Lateral Walks -->
-    <div class="card" style="--card-color: var(--mon)" onclick="toggleCard(this)">
+    <div class="card" style="--card-color: var(--mon)" data-video="https://youtu.be/DkaQ1mmfErA?si=ghUYGtTkpVavJmyX&t=21" onclick="toggleCard(this)">
       <div class="card-top">
         <div class="exercise-svg" style="background:rgba(196,98,45,0.08)">
           <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -701,7 +825,7 @@ footer {
     </div>
 
     <!-- 6. Glute Kickbacks -->
-    <div class="card" style="--card-color: var(--mon)" onclick="toggleCard(this)">
+    <div class="card" style="--card-color: var(--mon)" data-video="https://youtu.be/ZDM8Kz-aTaA?si=DCkpuTbTVcIRAixh&t=24" onclick="toggleCard(this)">
       <div class="card-top">
         <div class="exercise-svg" style="background:rgba(196,98,45,0.08)">
           <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -755,7 +879,7 @@ footer {
     </div>
 
     <!-- 7. Plank Hold -->
-    <div class="card" style="--card-color: var(--mon)" onclick="toggleCard(this)">
+    <div class="card" style="--card-color: var(--mon)" data-video="https://youtube.com/shorts/jUTER18-O1M?si=7h0o91Ctsh3NYzZ7" onclick="toggleCard(this)">
       <div class="card-top">
         <div class="exercise-svg" style="background:rgba(196,98,45,0.08)">
           <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -832,7 +956,7 @@ footer {
   <div class="grid">
 
     <!-- 8. Shoulder Press -->
-    <div class="card" style="--card-color: var(--wed)" onclick="toggleCard(this)">
+    <div class="card" style="--card-color: var(--wed)" data-video="https://youtu.be/B-aVuyhvLHU?si=N1gZRLTvKhZPFniB" onclick="toggleCard(this)">
       <div class="card-top">
         <div class="exercise-svg" style="background:rgba(78,129,158,0.08)">
           <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -886,7 +1010,7 @@ footer {
     </div>
 
     <!-- 9. Bent-Over Row -->
-    <div class="card" style="--card-color: var(--wed)" onclick="toggleCard(this)">
+    <div class="card" style="--card-color: var(--wed)" data-video="https://youtu.be/OyVQ8ZUc0LA?si=iKZqmrihDyGLEIgv&t=59" onclick="toggleCard(this)">
       <div class="card-top">
         <div class="exercise-svg" style="background:rgba(78,129,158,0.08)">
           <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -941,7 +1065,7 @@ footer {
     </div>
 
     <!-- 10. Floor Chest Press -->
-    <div class="card" style="--card-color: var(--wed)" onclick="toggleCard(this)">
+    <div class="card" style="--card-color: var(--wed)" data-video="https://youtu.be/T0Y3OBF1bNI?si=umUpMBAp42bmmjqf" onclick="toggleCard(this)">
       <div class="card-top">
         <div class="exercise-svg" style="background:rgba(78,129,158,0.08)">
           <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -997,7 +1121,7 @@ footer {
     </div>
 
     <!-- 11. Lateral Raises -->
-    <div class="card" style="--card-color: var(--wed)" onclick="toggleCard(this)">
+    <div class="card" style="--card-color: var(--wed)" data-video="https://youtu.be/XPPfnSEATJA?si=7EvxB6ZHyuMo2wQP" onclick="toggleCard(this)">
       <div class="card-top">
         <div class="exercise-svg" style="background:rgba(78,129,158,0.08)">
           <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1049,7 +1173,7 @@ footer {
     </div>
 
     <!-- 12. Face Pulls -->
-    <div class="card" style="--card-color: var(--wed)" onclick="toggleCard(this)">
+    <div class="card" style="--card-color: var(--wed)" data-video="https://youtu.be/HHZ1_OZKLII?si=eVixR9z7rb9VaIvI" onclick="toggleCard(this)">
       <div class="card-top">
         <div class="exercise-svg" style="background:rgba(78,129,158,0.08)">
           <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1105,7 +1229,7 @@ footer {
     </div>
 
     <!-- 13. Bicep Curl -->
-    <div class="card" style="--card-color: var(--wed)" onclick="toggleCard(this)">
+    <div class="card" style="--card-color: var(--wed)" data-video="https://youtu.be/scZFlj11eck?si=ed9pInXzT8McinUP" onclick="toggleCard(this)">
       <div class="card-top">
         <div class="exercise-svg" style="background:rgba(78,129,158,0.08)">
           <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1162,7 +1286,7 @@ footer {
     </div>
 
     <!-- 14. Tricep Overhead Extension -->
-    <div class="card" style="--card-color: var(--wed)" onclick="toggleCard(this)">
+    <div class="card" style="--card-color: var(--wed)" data-video="https://youtu.be/YM8iX9BJWjA?si=wxSk0c2yQfO71Zx5" onclick="toggleCard(this)">
       <div class="card-top">
         <div class="exercise-svg" style="background:rgba(78,129,158,0.08)">
           <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1220,7 +1344,7 @@ footer {
     </div>
 
     <!-- 15. Dead Bug -->
-    <div class="card" style="--card-color: var(--wed)" onclick="toggleCard(this)">
+    <div class="card" style="--card-color: var(--wed)" data-video="https://youtu.be/ZSYRZKYOf28?si=x32_dJKNh3ekdZrU&t=24" onclick="toggleCard(this)">
       <div class="card-top">
         <div class="exercise-svg" style="background:rgba(78,129,158,0.08)">
           <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1278,7 +1402,7 @@ footer {
     </div>
 
     <!-- 16. Side Plank -->
-    <div class="card" style="--card-color: var(--wed)" onclick="toggleCard(this)">
+    <div class="card" style="--card-color: var(--wed)" data-video="https://youtu.be/Oe9Tp9SvTCE?si=wwHxtWA4r_3ZPSVY" onclick="toggleCard(this)">
       <div class="card-top">
         <div class="exercise-svg" style="background:rgba(78,129,158,0.08)">
           <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1348,7 +1472,7 @@ footer {
   <div class="grid">
 
     <!-- 17. Barbell Deadlift -->
-    <div class="card" style="--card-color: var(--fri)" onclick="toggleCard(this)">
+    <div class="card" style="--card-color: var(--fri)" data-video="https://youtu.be/yPqv3ejnZvc?si=htOMVMUcV1upeGrv" onclick="toggleCard(this)">
       <div class="card-top">
         <div class="exercise-svg" style="background:rgba(107,153,88,0.08)">
           <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1405,7 +1529,7 @@ footer {
     </div>
 
     <!-- 18. Hip Thrust (Friday) -->
-    <div class="card" style="--card-color: var(--fri)" onclick="toggleCard(this)">
+    <div class="card" style="--card-color: var(--fri)" data-video="https://youtu.be/Zp26q4BY5HE?si=9bZ8XxG-DsWF7ash&t=60" onclick="toggleCard(this)">
       <div class="card-top">
         <div class="exercise-svg" style="background:rgba(107,153,88,0.08)">
           <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1451,7 +1575,7 @@ footer {
     </div>
 
     <!-- 19. Goblet Squat -->
-    <div class="card" style="--card-color: var(--fri)" onclick="toggleCard(this)">
+    <div class="card" style="--card-color: var(--fri)" data-video="https://youtu.be/xRTMjjZ76GI?si=X-OKosWA9BzepjSh" onclick="toggleCard(this)">
       <div class="card-top">
         <div class="exercise-svg" style="background:rgba(107,153,88,0.08)">
           <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1507,7 +1631,7 @@ footer {
     </div>
 
     <!-- 20. Single-Leg RDL -->
-    <div class="card" style="--card-color: var(--fri)" onclick="toggleCard(this)">
+    <div class="card" style="--card-color: var(--fri)" data-video="https://youtu.be/lI8-igvsnVQ?si=5p7MTKbewU9xe7Xk&t=7" onclick="toggleCard(this)">
       <div class="card-top">
         <div class="exercise-svg" style="background:rgba(107,153,88,0.08)">
           <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1562,7 +1686,7 @@ footer {
     </div>
 
     <!-- 21. Dumbbell Step-Ups -->
-    <div class="card" style="--card-color: var(--fri)" onclick="toggleCard(this)">
+    <div class="card" style="--card-color: var(--fri)" data-video="https://youtu.be/DxUNi119Qzs?si=YP29J-Gauw3wpniy" onclick="toggleCard(this)">
       <div class="card-top">
         <div class="exercise-svg" style="background:rgba(107,153,88,0.08)">
           <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1621,7 +1745,7 @@ footer {
     </div>
 
     <!-- 22. Push-Ups -->
-    <div class="card" style="--card-color: var(--fri)" onclick="toggleCard(this)">
+    <div class="card" style="--card-color: var(--fri)" data-video="https://youtu.be/WDIpL0pjun0?si=XaL9i16LwTkk00Q4" onclick="toggleCard(this)">
       <div class="card-top">
         <div class="exercise-svg" style="background:rgba(107,153,88,0.08)">
           <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1680,7 +1804,7 @@ footer {
     </div>
 
     <!-- 23. Russian Twist -->
-    <div class="card" style="--card-color: var(--fri)" onclick="toggleCard(this)">
+    <div class="card" style="--card-color: var(--fri)" data-video="https://youtu.be/DJQGX2J4IVw?si=aCNCLj95NVlo0uyI" onclick="toggleCard(this)">
       <div class="card-top">
         <div class="exercise-svg" style="background:rgba(107,153,88,0.08)">
           <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1736,7 +1860,7 @@ footer {
     </div>
 
     <!-- 24. Glute Bridge Hold -->
-    <div class="card" style="--card-color: var(--fri)" onclick="toggleCard(this)">
+    <div class="card" style="--card-color: var(--fri)" data-video="https://youtu.be/XLXGydU5DdU?si=fB8U6h0XQL9YKdWh" onclick="toggleCard(this)">
       <div class="card-top">
         <div class="exercise-svg" style="background:rgba(107,153,88,0.08)">
           <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1809,21 +1933,93 @@ footer {
 
 <script>
 function showSession(session, btn) {
-  // Hide all panels
   document.querySelectorAll('.session-panel').forEach(p => p.classList.remove('active'));
-  // Show target
   document.getElementById('session-' + session).classList.add('active');
-  // Update tabs
-  document.querySelectorAll('.tab-btn').forEach(b => {
-    b.className = 'tab-btn';
-  });
+  document.querySelectorAll('.tab-btn').forEach(b => { b.className = 'tab-btn'; });
   btn.classList.add('active-' + session);
 }
 
 function toggleCard(card) {
-  // Close others if desired (comment out for multiple open)
-  // document.querySelectorAll('.card.open').forEach(c => { if(c !== card) c.classList.remove('open'); });
   card.classList.toggle('open');
+
+  if (card.classList.contains('open')) {
+    const rawUrl = card.getAttribute('data-video');
+    const body   = card.querySelector('.card-body');
+    if (!body || !rawUrl || body.querySelector('.video-embed-wrap')) return;
+
+    const ytIcon = `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31.5 31.5 0 0 0 0 12a31.5 31.5 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31.5 31.5 0 0 0 24 12a31.5 31.5 0 0 0-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg>`;
+
+    // ── Parse YouTube URL → extract videoId + start time ──
+    let videoId = null, startSec = 0;
+    try {
+      const u = new URL(rawUrl);
+      if (u.hostname === 'youtu.be') {
+        videoId = u.pathname.slice(1);
+        startSec = parseInt(u.searchParams.get('t') || '0', 10);
+      } else if (u.hostname === 'www.youtube.com' || u.hostname === 'youtube.com') {
+        if (u.pathname === '/watch') {
+          videoId = u.searchParams.get('v');
+          startSec = parseInt(u.searchParams.get('t') || '0', 10);
+        }
+      }
+    } catch(e) {}
+
+    const wrap = document.createElement('div');
+    wrap.className = 'video-embed-wrap';
+    wrap.addEventListener('click', e => e.stopPropagation());
+
+    if (videoId) {
+      const watchUrl = `https://www.youtube.com/watch?v=${videoId}&t=${startSec}`;
+      const embedSrc = `https://www.youtube-nocookie.com/embed/${videoId}?start=${startSec}&rel=0&modestbranding=1&autoplay=1`;
+      const thumbUrl = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+
+      // Label row with open-on-youtube link
+      const labelRow = document.createElement('div');
+      labelRow.className = 'video-embed-label';
+      labelRow.innerHTML = `
+        <span class="vid-title">${ytIcon} Tutorial Video</span>
+        <a href="${watchUrl}" target="_blank" rel="noopener noreferrer">Open on YouTube ↗</a>`;
+
+      // Thumbnail with play button overlay — click swaps in the real iframe
+      const thumb = document.createElement('div');
+      thumb.className = 'video-thumb';
+      thumb.title = 'Click to play';
+      thumb.innerHTML = `
+        <img src="${thumbUrl}" alt="Video thumbnail" loading="lazy">
+        <div class="play-btn">
+          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </div>`;
+
+      thumb.addEventListener('click', function() {
+        const iframe = document.createElement('iframe');
+        iframe.src = embedSrc;
+        iframe.setAttribute('frameborder', '0');
+        iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+        iframe.setAttribute('allowfullscreen', '');
+        iframe.style.cssText = 'display:block;width:100%;aspect-ratio:16/9;border:none;background:#000;';
+        wrap.replaceChild(iframe, thumb);
+      });
+
+      wrap.appendChild(labelRow);
+      wrap.appendChild(thumb);
+
+    } else {
+      // ── Search fallback: clean link, no broken iframe ──
+      let searchHref = rawUrl;
+      try {
+        const q = new URL(rawUrl).searchParams.get('search_query') || '';
+        if (q) searchHref = `https://www.youtube.com/results?search_query=${encodeURIComponent(q)}`;
+      } catch(e) {}
+
+      wrap.innerHTML = `
+        <div class="video-search-fallback">
+          <span>${ytIcon} No video assigned yet</span>
+          <a href="${searchHref}" target="_blank" rel="noopener noreferrer">Search on YouTube ↗</a>
+        </div>`;
+    }
+
+    body.appendChild(wrap);
+  }
 }
 
 // Stagger card entrance animation on session switch
