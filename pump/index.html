@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Exercise Guide</title>
+<title>Exercise Guide — Alenami Plan</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -514,10 +514,365 @@ footer {
   .grid { grid-template-columns: 1fr; }
   .card-top { flex-direction: column; gap: 14px; }
   .exercise-svg { width: 64px; height: 64px; }
+  .page-nav-btn { padding: 12px 14px; font-size: 10px; letter-spacing: 1.5px; }
+  .meal-grid { grid-template-columns: 1fr; }
 }
+
+/* ── TOP PAGE NAV ── */
+.page-nav {
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  padding: 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(13,10,7,0.96);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.page-nav-btn {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-family: 'Outfit', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  padding: 16px 28px;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.25s ease;
+  white-space: nowrap;
+}
+.page-nav-btn::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 100%; height: 2px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transition: transform 0.25s ease;
+}
+.page-nav-btn:hover { color: var(--cream); }
+.page-nav-btn.active { color: var(--gold); }
+.page-nav-btn.active::after { transform: scaleX(1); }
+
+/* ── PAGE SECTIONS ── */
+.page-section { display: none; }
+.page-section.active { display: block; animation: panelIn 0.35s ease; }
+
+/* ── CHECKLIST PAGE ── */
+.checklist-wrap {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 52px 24px 80px;
+}
+.checklist-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+.checklist-header .day-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 14px;
+}
+.checklist-header h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(32px, 5vw, 52px);
+  font-weight: 300;
+  color: var(--cream);
+  line-height: 1.1;
+}
+.checklist-header p { margin-top: 10px; font-size: 14px; color: var(--muted); }
+.checklist-reset {
+  margin-top: 20px;
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-family: 'Outfit', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 10px 22px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.checklist-reset:hover { color: var(--cream); border-color: rgba(240,230,211,0.3); }
+
+.checklist-group {
+  margin-bottom: 3px;
+  background: var(--bg-card);
+  overflow: hidden;
+}
+.checklist-group-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 24px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  background: rgba(255,255,255,0.02);
+}
+.checklist-group-title .group-icon { font-size: 15px; }
+.group-gold   .checklist-group-title { color: var(--gold); }
+.group-mon    .checklist-group-title { color: var(--mon); }
+.group-wed    .checklist-group-title { color: var(--wed); }
+.group-fri    .checklist-group-title { color: var(--fri); }
+.group-purple .checklist-group-title { color: #9B7EBD; }
+.group-sun    .checklist-group-title { color: var(--gold); opacity: 0.75; }
+
+.checklist-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 14px 24px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  cursor: pointer;
+  transition: background 0.2s;
+  user-select: none;
+}
+.checklist-item:last-child { border-bottom: none; }
+.checklist-item:hover { background: var(--bg-card2); }
+
+.check-box {
+  flex-shrink: 0;
+  width: 20px; height: 20px;
+  border-radius: 4px;
+  border: 1.5px solid rgba(138,122,104,0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+  transition: all 0.2s ease;
+}
+.checklist-item.done .check-box {
+  background: var(--gold);
+  border-color: var(--gold);
+}
+.check-box svg {
+  width: 11px; height: 11px;
+  fill: none;
+  stroke: var(--bg);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0;
+  transform: scale(0.5);
+  transition: all 0.15s ease;
+}
+.checklist-item.done .check-box svg { opacity: 1; transform: scale(1); }
+.check-text {
+  flex: 1;
+  font-size: 14px;
+  color: #C8B89A;
+  line-height: 1.5;
+  transition: color 0.2s, opacity 0.2s;
+}
+.check-sub {
+  display: block;
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 3px;
+}
+.checklist-item.done .check-text {
+  color: var(--muted);
+  opacity: 0.45;
+  text-decoration: line-through;
+  text-decoration-color: rgba(138,122,104,0.4);
+}
+
+.progress-bar-wrap {
+  background: var(--bg-card);
+  padding: 18px 24px;
+  margin-bottom: 3px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.progress-bar-track {
+  flex: 1;
+  height: 3px;
+  background: rgba(255,255,255,0.07);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%;
+  background: var(--gold);
+  border-radius: 2px;
+  transition: width 0.4s ease;
+  width: 0%;
+}
+.progress-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--gold);
+  min-width: 52px;
+  text-align: right;
+}
+
+/* ── MEAL PLAN PAGE ── */
+.meal-wrap {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 52px 24px 80px;
+}
+.meal-header {
+  text-align: center;
+  margin-bottom: 52px;
+}
+.meal-header h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(32px, 5vw, 52px);
+  font-weight: 300;
+  color: var(--cream);
+  line-height: 1.1;
+}
+.meal-header h2 em { font-style: italic; color: var(--gold); }
+.meal-header p { margin-top: 12px; font-size: 14px; color: var(--muted); }
+
+.meal-section-title {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 40px 0 3px;
+  padding: 14px 24px;
+  background: var(--bg-card);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.meal-section-accent { color: var(--gold); }
+
+.protein-table-wrap {
+  background: var(--bg-card);
+  overflow: hidden;
+  margin-bottom: 3px;
+}
+.protein-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.protein-table th {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-align: left;
+  padding: 14px 24px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  background: rgba(255,255,255,0.02);
+}
+.protein-table th:last-child { text-align: right; }
+.protein-table td {
+  padding: 14px 24px;
+  font-size: 14px;
+  color: #C8B89A;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  line-height: 1.5;
+}
+.protein-table tr:last-child td { border-bottom: none; }
+.protein-table td:last-child { color: var(--gold); font-weight: 500; text-align: right; white-space: nowrap; }
+.protein-table tbody tr:hover td { background: rgba(255,255,255,0.02); }
+.protein-table .total-row td { color: var(--cream); font-weight: 600; border-top: 1px solid rgba(255,255,255,0.08); }
+.protein-table .total-row td:last-child { color: var(--gold); }
+
+.meal-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2px;
+  margin-bottom: 3px;
+}
+.meal-card {
+  background: var(--bg-card);
+  padding: 22px 24px;
+  position: relative;
+  transition: background 0.2s;
+}
+.meal-card:hover { background: var(--bg-card2); }
+.meal-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px; height: 100%;
+  background: var(--card-color, var(--gold));
+}
+.meal-card-num {
+  font-size: 10px;
+  color: var(--muted);
+  font-weight: 500;
+  letter-spacing: 1px;
+  margin-bottom: 7px;
+}
+.meal-card-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--cream);
+  margin-bottom: 6px;
+  line-height: 1.25;
+}
+.meal-card-note {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.5;
+  font-style: italic;
+}
+
+.prep-card {
+  background: var(--bg-card);
+  padding: 20px 24px;
+  margin-bottom: 2px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  transition: background 0.2s;
+}
+.prep-card:hover { background: var(--bg-card2); }
+.prep-icon { font-size: 18px; flex-shrink: 0; margin-top: 2px; }
+.prep-text { font-size: 14px; color: #C8B89A; line-height: 1.55; }
+.prep-text strong { color: var(--cream); font-weight: 500; }
+
+.meal-callout {
+  background: rgba(212,164,71,0.06);
+  border: 1px solid rgba(212,164,71,0.18);
+  border-radius: 4px;
+  padding: 18px 22px;
+  margin: 20px 0 3px;
+  font-size: 13px;
+  color: #C8B89A;
+  line-height: 1.65;
+}
+.meal-callout strong { color: var(--gold); }
 </style>
 </head>
 <body>
+
+<!-- ── PAGE NAV ── -->
+<nav class="page-nav">
+  <button class="page-nav-btn active" onclick="showPage('exercises', this)">💪 Exercises</button>
+  <button class="page-nav-btn" onclick="showPage('checklist', this)">✅ Daily Checklist</button>
+  <button class="page-nav-btn" onclick="showPage('meals', this)">🥗 Meal Plan</button>
+</nav>
+
+<!-- PAGE 1: EXERCISE GUIDE -->
+<div class="page-section active" id="page-exercises">
 
 <!-- ── HEADER ── -->
 <div class="header">
@@ -1927,6 +2282,334 @@ footer {
 </div><!-- end friday panel -->
 
 
+</div><!-- end page-exercises -->
+
+
+<!-- ══════════════════════════════════════════ -->
+<!-- PAGE 2: DAILY CHECKLIST                    -->
+<!-- ══════════════════════════════════════════ -->
+<div class="page-section" id="page-checklist">
+<div class="checklist-wrap">
+
+  <div class="checklist-header">
+    <div class="day-badge" id="cl-day-badge">Today</div>
+    <h2>Daily <em style="font-style:italic;color:var(--gold)">Checklist</em></h2>
+    <p>Tap each item as you complete it · Resets automatically each day</p>
+    <button class="checklist-reset" onclick="resetChecklist()">↺ Reset Today</button>
+  </div>
+
+  <!-- Progress bar -->
+  <div class="progress-bar-wrap">
+    <div class="progress-bar-track"><div class="progress-bar-fill" id="cl-progress-fill"></div></div>
+    <div class="progress-label" id="cl-progress-label">0 / 0</div>
+  </div>
+
+  <!-- EVERY MORNING -->
+  <div class="checklist-group group-gold" data-group="morning">
+    <div class="checklist-group-title"><span class="group-icon">☀️</span> Every Morning</div>
+    <div class="checklist-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+      <div class="check-text">Alenami 30mg taken with breakfast / morning coffee</div>
+    </div>
+    <div class="checklist-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+      <div class="check-text">Morning coffee with hydrolysed collagen (10g) stirred in<span class="check-sub">Dissolves clear — no taste change</span></div>
+    </div>
+    <div class="checklist-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+      <div class="check-text">Creatine (3–5g) mixed into coffee or water</div>
+    </div>
+  </div>
+
+  <!-- DURING THE DAY -->
+  <div class="checklist-group group-gold" data-group="daytime">
+    <div class="checklist-group-title"><span class="group-icon">🌤️</span> During the Day</div>
+    <div class="checklist-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+      <div class="check-text">Hit protein target — 100–120g across the day</div>
+    </div>
+    <div class="checklist-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+      <div class="check-text">2.5–3L of water<span class="check-sub">Dry mouth is common on Alenami — keep drinking</span></div>
+    </div>
+    <div class="checklist-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+      <div class="check-text">No caffeine after 12–1pm<span class="check-sub">Alenami is already stimulating — afternoon coffee disrupts sleep</span></div>
+    </div>
+    <div class="checklist-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+      <div class="check-text">No alcohol — strictly prohibited with Alenami</div>
+    </div>
+    <div class="checklist-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+      <div class="check-text">7,000–10,000 steps<span class="check-sub">Check phone health app in the evening</span></div>
+    </div>
+    <div class="checklist-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+      <div class="check-text">Vitamin C with or after a meal<span class="check-sub">Kiwi / orange juice / capsicum / supplement</span></div>
+    </div>
+  </div>
+
+  <!-- EVERY EVENING -->
+  <div class="checklist-group group-gold" data-group="evening">
+    <div class="checklist-group-title"><span class="group-icon">🌙</span> Every Evening</div>
+    <div class="checklist-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+      <div class="check-text">Omega-3 fish oil (2–3g EPA + DHA) taken with dinner</div>
+    </div>
+    <div class="checklist-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+      <div class="check-text">Magnesium glycinate (300mg) 30–60 min before bed</div>
+    </div>
+    <div class="checklist-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+      <div class="check-text">Body moisturiser after shower</div>
+    </div>
+    <div class="checklist-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+      <div class="check-text">In bed at a consistent time — aim for 7.5–8 hours</div>
+    </div>
+  </div>
+
+  <!-- LIFTING DAYS -->
+  <div class="checklist-group group-mon" data-group="lifting" id="group-lifting">
+    <div class="checklist-group-title"><span class="group-icon">🏋️</span> Lifting Day (Mon / Wed / Fri)</div>
+    <div class="checklist-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+      <div class="check-text">Session completed — 40–45 min</div>
+    </div>
+    <div class="checklist-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+      <div class="check-text">Tried to add weight or an extra rep vs last week<span class="check-sub">Progressive overload — this is what drives change</span></div>
+    </div>
+    <div class="checklist-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+      <div class="check-text">Heart rate felt manageable throughout — not uncomfortably high</div>
+    </div>
+  </div>
+
+  <!-- NON-LIFTING DAYS -->
+  <div class="checklist-group group-purple" data-group="rest" id="group-rest">
+    <div class="checklist-group-title"><span class="group-icon">🚶</span> Rest Day (Tue / Thu / Sat)</div>
+    <div class="checklist-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+      <div class="check-text">10 min skipping (45 sec on / 15 sec rest × 10 rounds) OR 30–40 min walk</div>
+    </div>
+    <div class="checklist-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+      <div class="check-text">Dry brushing done<span class="check-sub">Aim for 3× per week — pick any 3 days</span></div>
+    </div>
+  </div>
+
+  <!-- SUNDAY PREP -->
+  <div class="checklist-group group-sun" data-group="sunday" id="group-sunday">
+    <div class="checklist-group-title"><span class="group-icon">🍗</span> Sunday — Batch Prep</div>
+    <div class="checklist-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+      <div class="check-text">2 rotisserie chickens stripped and stored in the fridge<span class="check-sub">Lasts 4–5 days — protein sorted for the week</span></div>
+    </div>
+    <div class="checklist-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+      <div class="check-text">8–10 eggs boiled and in the fridge<span class="check-sub">Leave in shells — grab and go all week</span></div>
+    </div>
+    <div class="checklist-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+      <div class="check-text">Rice or quinoa batch cooked and stored<span class="check-sub">Stores 5 days in the fridge</span></div>
+    </div>
+    <div class="checklist-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+      <div class="check-text">Fridge restocked — yoghurt, cottage cheese, canned fish, salad bags, deli meat</div>
+    </div>
+  </div>
+
+  <!-- MONTHLY -->
+  <div class="checklist-group group-gold" data-group="monthly" id="group-monthly">
+    <div class="checklist-group-title"><span class="group-icon">📊</span> Monthly</div>
+    <div class="checklist-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+      <div class="check-text">Progress photos — same clothing, same lighting, same time of day</div>
+    </div>
+    <div class="checklist-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+      <div class="check-text">Body measurements logged — waist, hips, thighs, upper arms</div>
+    </div>
+    <div class="checklist-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+      <div class="check-text">GP check-in — blood pressure monitoring is important on phentermine</div>
+    </div>
+    <div class="checklist-item" onclick="toggleCheck(this)">
+      <div class="check-box"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+      <div class="check-text">Note strength progress — lifting heavier or doing more reps than last month?</div>
+    </div>
+  </div>
+
+</div><!-- end checklist-wrap -->
+</div><!-- end page-checklist -->
+
+
+<!-- ══════════════════════════════════════════ -->
+<!-- PAGE 3: MEAL PLAN                         -->
+<!-- ══════════════════════════════════════════ -->
+<div class="page-section" id="page-meals">
+<div class="meal-wrap">
+
+  <div class="meal-header">
+    <div style="font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:14px;">Simplified · Minimal Cooking</div>
+    <h2>Your <em>Meal</em> Plan</h2>
+    <p>Everything is assembly-based — under 10 minutes. One 30-minute Sunday prep sets up your whole week.</p>
+  </div>
+
+  <!-- Sunday Prep -->
+  <div class="meal-section-title">🗓️ Sunday Batch Prep — 30 minutes, whole week sorted</div>
+  <div class="prep-card"><div class="prep-icon">🍗</div><div class="prep-text"><strong>2 rotisserie chickens</strong> — strip the meat off, store in containers in the fridge. Lasts 4–5 days, zero cooking required all week.</div></div>
+  <div class="prep-card"><div class="prep-icon">🥚</div><div class="prep-text"><strong>8–10 boiled eggs</strong> — store in the fridge in their shells, grab and go all week. 2 eggs = 12g protein, no prep needed.</div></div>
+  <div class="prep-card"><div class="prep-icon">🍚</div><div class="prep-text"><strong>Big batch of rice or quinoa</strong> — stores 5 days in the fridge. The base for most lunches and dinners.</div></div>
+  <div class="prep-card"><div class="prep-icon">🛒</div><div class="prep-text"><strong>Stock the fridge:</strong> pre-washed salad bags, Greek yoghurt tubs (200g singles), cottage cheese, canned tuna and salmon, deli turkey or chicken slices.</div></div>
+  <div class="prep-card"><div class="prep-icon">🥫</div><div class="prep-text"><strong>Stock the pantry:</strong> rice cakes, wholegrain crackers, nuts, olive oil, soy sauce, protein powder.</div></div>
+
+  <!-- Protein Targets -->
+  <div class="meal-section-title">🎯 Daily Protein Targets</div>
+  <div class="protein-table-wrap">
+    <table class="protein-table">
+      <thead><tr><th>Meal</th><th>Target</th></tr></thead>
+      <tbody>
+        <tr><td>Morning coffee (milk + collagen)</td><td>~15–20g</td></tr>
+        <tr><td>Lunch</td><td>35–40g</td></tr>
+        <tr><td>Dinner</td><td>30–35g</td></tr>
+        <tr><td>Snacks (1–2 per day)</td><td>15–20g</td></tr>
+        <tr class="total-row"><td><strong>Daily Total</strong></td><td><strong>100–120g</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="meal-callout">
+    <strong>Low appetite days:</strong> Don't skip nutrition entirely. A protein shake (1.5 scoops whey + milk) = 35–40g protein in 30 seconds. Prioritise this above all else on days when eating feels hard.
+  </div>
+
+  <!-- Breakfast -->
+  <div class="meal-section-title"><span class="meal-section-accent">☕</span> Breakfast — 5 min or skip <span style="color:var(--muted);font-weight:400;letter-spacing:0;text-transform:none">(coffee already covers ~15–20g protein)</span></div>
+  <div class="meal-grid">
+    <div class="meal-card" style="--card-color:var(--gold)">
+      <div class="meal-card-num">Option A</div>
+      <div class="meal-card-title">Scrambled Eggs + Sourdough</div>
+      <div class="meal-card-note">3 eggs in a mug, microwave 90 sec, stir, done. 1 slice sourdough.</div>
+    </div>
+    <div class="meal-card" style="--card-color:var(--gold)">
+      <div class="meal-card-num">Option B</div>
+      <div class="meal-card-title">Greek Yoghurt Bowl</div>
+      <div class="meal-card-note">200g yoghurt + 1 scoop protein powder stirred in + berries.</div>
+    </div>
+    <div class="meal-card" style="--card-color:var(--gold)">
+      <div class="meal-card-num">Option C</div>
+      <div class="meal-card-title">Protein Shake</div>
+      <div class="meal-card-note">1.5 scoops protein powder + milk + 1 tbsp peanut butter. Shake and go.</div>
+    </div>
+    <div class="meal-card" style="--card-color:var(--gold)">
+      <div class="meal-card-num">Option D</div>
+      <div class="meal-card-title">Cottage Cheese + Banana</div>
+      <div class="meal-card-note">200g cottage cheese + sliced banana + drizzle of honey.</div>
+    </div>
+    <div class="meal-card" style="--card-color:var(--gold)">
+      <div class="meal-card-num">Option E</div>
+      <div class="meal-card-title">3 Boiled Eggs + Fruit</div>
+      <div class="meal-card-note">Grab from the fridge — literally no prep. 1 piece of fruit alongside.</div>
+    </div>
+  </div>
+
+  <!-- Lunch -->
+  <div class="meal-section-title"><span class="meal-section-accent">🥗</span> Lunch — 5 min assembly, aim for 35–40g protein</div>
+  <div class="meal-grid">
+    <div class="meal-card" style="--card-color:var(--wed)">
+      <div class="meal-card-num">Option A</div>
+      <div class="meal-card-title">Chicken Salad</div>
+      <div class="meal-card-note">Rotisserie chicken + pre-washed salad bag + olive oil & lemon + 2 crackers.</div>
+    </div>
+    <div class="meal-card" style="--card-color:var(--wed)">
+      <div class="meal-card-num">Option B</div>
+      <div class="meal-card-title">Tuna or Salmon Rice Bowl</div>
+      <div class="meal-card-note">Canned tuna or salmon + batch rice + soy sauce or lemon. Zero dishes if you eat from the can.</div>
+    </div>
+    <div class="meal-card" style="--card-color:var(--wed)">
+      <div class="meal-card-num">Option C</div>
+      <div class="meal-card-title">Turkey Wrap</div>
+      <div class="meal-card-note">Deli turkey slices + wholegrain wrap + avocado + mustard + baby spinach.</div>
+    </div>
+    <div class="meal-card" style="--card-color:var(--wed)">
+      <div class="meal-card-num">Option D</div>
+      <div class="meal-card-title">Chicken Rice + Edamame</div>
+      <div class="meal-card-note">Rotisserie chicken + batch rice + frozen edamame (microwave 3 min).</div>
+    </div>
+    <div class="meal-card" style="--card-color:var(--wed)">
+      <div class="meal-card-num">Option E</div>
+      <div class="meal-card-title">Salmon Rice Cakes</div>
+      <div class="meal-card-note">Canned salmon + rice cakes + cottage cheese + salad bag. Zero cooking at all.</div>
+    </div>
+  </div>
+
+  <!-- Dinner -->
+  <div class="meal-section-title"><span class="meal-section-accent">🍽️</span> Dinner — 10 min max</div>
+  <div class="meal-grid">
+    <div class="meal-card" style="--card-color:var(--fri)">
+      <div class="meal-card-num">Option A</div>
+      <div class="meal-card-title">Chicken or Salmon + Veggies</div>
+      <div class="meal-card-note">Pre-marinated chicken or salmon (air fryer 12–15 min) + frozen veg (microwave 4 min) + batch rice.</div>
+    </div>
+    <div class="meal-card" style="--card-color:var(--fri)">
+      <div class="meal-card-num">Option B</div>
+      <div class="meal-card-title">Ham & Cheese Omelette</div>
+      <div class="meal-card-note">3–4 eggs + deli ham + cheese + spinach. Quicker than ordering UberEats.</div>
+    </div>
+    <div class="meal-card" style="--card-color:var(--fri)">
+      <div class="meal-card-num">Option C</div>
+      <div class="meal-card-title">Salmon Rice Cakes</div>
+      <div class="meal-card-note">Canned salmon + mayo + lemon + rice cakes + salad bag. Zero cooking, zero cleanup.</div>
+    </div>
+    <div class="meal-card" style="--card-color:var(--fri)">
+      <div class="meal-card-num">Option D</div>
+      <div class="meal-card-title">Prawns & Avocado</div>
+      <div class="meal-card-note">Supermarket pre-cooked prawns + avocado + salad bag + olive oil. Nothing to cook.</div>
+    </div>
+    <div class="meal-card" style="--card-color:var(--fri)">
+      <div class="meal-card-num">Option E</div>
+      <div class="meal-card-title">Beef Mince Bowl</div>
+      <div class="meal-card-note">Lean beef mince (brown in pan 8 min, garlic + salt) + packet microwave rice + frozen peas.</div>
+    </div>
+  </div>
+
+  <!-- Snacks -->
+  <div class="meal-section-title"><span class="meal-section-accent">🫙</span> Snacks — keep these in the house at all times</div>
+  <div class="meal-grid">
+    <div class="meal-card" style="--card-color:var(--accent)">
+      <div class="meal-card-num">12g protein</div>
+      <div class="meal-card-title">Pre-Boiled Eggs</div>
+      <div class="meal-card-note">2 eggs in shells in the fridge — grab and go, no prep needed.</div>
+    </div>
+    <div class="meal-card" style="--card-color:var(--accent)">
+      <div class="meal-card-num">~16g protein</div>
+      <div class="meal-card-title">Greek Yoghurt Tub</div>
+      <div class="meal-card-note">200g single-serve tubs — buy in bulk, no prep, good anywhere.</div>
+    </div>
+    <div class="meal-card" style="--card-color:var(--accent)">
+      <div class="meal-card-num">15g+ protein</div>
+      <div class="meal-card-title">Beef Jerky or Protein Bar</div>
+      <div class="meal-card-note">Check label: 15g+ protein, under 8g sugar. Good for on-the-go days.</div>
+    </div>
+    <div class="meal-card" style="--card-color:var(--accent)">
+      <div class="meal-card-num">~15g protein</div>
+      <div class="meal-card-title">Cottage Cheese + Rice Cakes</div>
+      <div class="meal-card-note">A satisfying combo that holds hunger well between meals.</div>
+    </div>
+    <div class="meal-card" style="--card-color:var(--accent)">
+      <div class="meal-card-num">Watch portions</div>
+      <div class="meal-card-title">Almonds</div>
+      <div class="meal-card-note">Small handful — satisfying but calorie-dense. One handful, not the bag.</div>
+    </div>
+  </div>
+
+</div><!-- end meal-wrap -->
+</div><!-- end page-meals -->
+
+
 <footer>
   <p style="color:rgba(138,122,104,0.6); font-size:11px; letter-spacing:2px; text-transform:uppercase">Personal Use Only · Not Medical Advice · Share with your GP</p>
 </footer>
@@ -2045,6 +2728,90 @@ window.showSession = function(session, btn) {
   origShow(session, btn);
   setTimeout(animateCards, 50);
 };
+
+// ══════════════════════════════════════════
+// PAGE NAVIGATION
+// ══════════════════════════════════════════
+function showPage(page, btn) {
+  document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.page-nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ══════════════════════════════════════════
+// CHECKLIST — day detection + persistence
+// ══════════════════════════════════════════
+(function initChecklist() {
+  const DAYS    = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const today   = new Date();
+  const dayName = DAYS[today.getDay()];
+  const dateKey = today.toISOString().slice(0, 10);
+  const storeKey = 'checklist_' + dateKey;
+
+  const badge = document.getElementById('cl-day-badge');
+  if (badge) badge.textContent = dayName + ' — ' + today.toLocaleDateString('en-AU', { day:'numeric', month:'long' });
+
+  const isLifting = ['Monday','Wednesday','Friday'].includes(dayName);
+  const isRest    = ['Tuesday','Thursday','Saturday'].includes(dayName);
+  const isSunday  = dayName === 'Sunday';
+
+  const gl = document.getElementById('group-lifting');
+  const gr = document.getElementById('group-rest');
+  const gs = document.getElementById('group-sunday');
+  const gm = document.getElementById('group-monthly');
+
+  if (gl) gl.style.display = isLifting ? '' : 'none';
+  if (gr) gr.style.display = isRest    ? '' : 'none';
+  if (gs) gs.style.display = isSunday  ? '' : 'none';
+  if (gm) gm.style.display = (today.getDate() === 1) ? '' : 'none';
+
+  let saved = {};
+  try { saved = JSON.parse(localStorage.getItem(storeKey) || '{}'); } catch(e) {}
+
+  const items = document.querySelectorAll('#page-checklist .checklist-item');
+  items.forEach((item, i) => {
+    if (saved[i]) item.classList.add('done');
+  });
+
+  updateProgress();
+})();
+
+function toggleCheck(item) {
+  item.classList.toggle('done');
+  saveChecklist();
+  updateProgress();
+}
+
+function saveChecklist() {
+  const dateKey  = new Date().toISOString().slice(0, 10);
+  const storeKey = 'checklist_' + dateKey;
+  const state    = {};
+  document.querySelectorAll('#page-checklist .checklist-item').forEach((item, i) => {
+    if (item.classList.contains('done')) state[i] = true;
+  });
+  try { localStorage.setItem(storeKey, JSON.stringify(state)); } catch(e) {}
+}
+
+function resetChecklist() {
+  document.querySelectorAll('#page-checklist .checklist-item').forEach(item => item.classList.remove('done'));
+  const dateKey  = new Date().toISOString().slice(0, 10);
+  try { localStorage.removeItem('checklist_' + dateKey); } catch(e) {}
+  updateProgress();
+}
+
+function updateProgress() {
+  const allItems  = [...document.querySelectorAll('#page-checklist .checklist-item')]
+                      .filter(el => el.closest('.checklist-group').style.display !== 'none');
+  const doneItems = allItems.filter(el => el.classList.contains('done'));
+  const pct       = allItems.length ? Math.round((doneItems.length / allItems.length) * 100) : 0;
+
+  const fill  = document.getElementById('cl-progress-fill');
+  const label = document.getElementById('cl-progress-label');
+  if (fill)  fill.style.width  = pct + '%';
+  if (label) label.textContent = doneItems.length + ' / ' + allItems.length;
+}
 </script>
 </body>
 </html>
