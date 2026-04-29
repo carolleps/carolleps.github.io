@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Welcome to the World Cup — Speech Guide Year 6</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green:   #00E676;
+    --green2:  #00C853;
+    --gold:    #FFD600;
+    --red:     #FF1744;
+    --bg:      #0A0F0A;
+    --bg2:     #111811;
+    --bg3:     #192219;
+    --card:    #141A14;
+    --border:  rgba(0,230,118,0.12);
+    --muted:   rgba(255,255,255,0.4);
+    --cream:   rgba(255,255,255,0.88);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--cream);
+    line-height: 1.65;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE TEXTURE ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.6;
+  }
+
+  /* ── GRID LINES ── */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,230,118,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,230,118,0.03) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page { position: relative; z-index: 1; }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,15,10,0.9);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+  }
+  .nav-inner {
+    max-width: 820px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+    gap: 8px;
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 2px;
+    color: var(--green);
+    white-space: nowrap;
+  }
+  .nav-links {
+    display: flex;
+    gap: 4px;
+    list-style: none;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+  .nav-links a {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    border: 1px solid transparent;
+    letter-spacing: 0.5px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .nav-links a:hover { border-color: var(--border); color: var(--green); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 24px 60px;
+    max-width: 820px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .hero-eyebrow {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 13px;
+    letter-spacing: 4px;
+    color: var(--green);
+    margin-bottom: 20px;
+    animation: fadeIn 0.6s ease both;
+  }
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(56px, 12vw, 120px);
+    line-height: 0.92;
+    letter-spacing: 2px;
+    color: white;
+    animation: slideUp 0.7s ease both 0.1s;
+  }
+  .hero h1 .accent { color: var(--green); display: block; }
+  .hero h1 .sub-accent { color: var(--gold); }
+  .hero-desc {
+    margin-top: 28px;
+    font-size: 17px;
+    color: var(--muted);
+    max-width: 480px;
+    animation: slideUp 0.7s ease both 0.2s;
+    line-height: 1.7;
+  }
+  .hero-meta {
+    margin-top: 32px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    animation: slideUp 0.7s ease both 0.3s;
+  }
+  .meta-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid var(--border);
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.6);
+    letter-spacing: 0.5px;
+  }
+  .meta-pill .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
+  .hero-cta {
+    margin-top: 40px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--green);
+    color: var(--bg);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 2px;
+    padding: 14px 28px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.2s;
+    animation: slideUp 0.7s ease both 0.4s;
+    align-self: flex-start;
+  }
+  .hero-cta:hover { background: var(--green2); transform: translateX(4px); }
+
+  /* ── SCOREBOARD STRIP ── */
+  .scoreboard {
+    background: var(--green);
+    color: var(--bg);
+    padding: 14px 0;
+    overflow: hidden;
+    position: relative;
+  }
+  .scoreboard-track {
+    display: flex;
+    gap: 48px;
+    white-space: nowrap;
+    animation: ticker 30s linear infinite;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 15px;
+    letter-spacing: 3px;
+  }
+  @keyframes ticker {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 820px; margin: 0 auto; padding: 0 24px; }
+
+  /* ── SECTIONS ── */
+  .section {
+    padding: 80px 0;
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .section.visible { opacity: 1; transform: translateY(0); }
+
+  .section-eyebrow {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 12px;
+    letter-spacing: 4px;
+    color: var(--green);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 32px; height: 2px;
+    background: var(--green);
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(32px, 5vw, 52px);
+    letter-spacing: 1px;
+    color: white;
+    line-height: 1.05;
+    margin-bottom: 8px;
+  }
+  .section-intro { font-size: 16px; color: var(--muted); margin-bottom: 40px; max-width: 560px; }
+
+  /* ── THINK CARDS ── */
+  .think-group { margin-bottom: 32px; }
+  .think-group-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 14px;
+    letter-spacing: 3px;
+    color: var(--green);
+    margin-bottom: 14px;
+  }
+  .think-list { display: flex; flex-direction: column; gap: 8px; }
+  .think-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 20px;
+    font-size: 15px;
+    color: rgba(255,255,255,0.75);
+    transition: all 0.2s;
+    cursor: default;
+  }
+  .think-item:hover { border-color: rgba(0,230,118,0.3); color: white; }
+  .think-q { color: var(--green); font-weight: 700; flex-shrink: 0; font-size: 16px; }
+
+  /* ── SPEECH PARTS ── */
+  .parts { display: flex; flex-direction: column; gap: 2px; }
+  .part {
+    background: var(--card);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .part:first-child { border-radius: 12px 12px 0 0; }
+  .part:last-child { border-radius: 0 0 12px 12px; }
+  .part.open { border-color: rgba(0,230,118,0.35); }
+  .part-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 24px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .part-header:hover { background: rgba(0,230,118,0.04); }
+  .part-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    line-height: 1;
+    color: var(--green);
+    min-width: 32px;
+    opacity: 0.5;
+    transition: opacity 0.2s;
+  }
+  .part.open .part-num { opacity: 1; }
+  .part-meta { flex: 1; }
+  .part-name {
+    font-weight: 700;
+    font-size: 16px;
+    color: white;
+  }
+  .part-time { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .part-chevron { color: var(--muted); transition: transform 0.3s; font-size: 14px; }
+  .part.open .part-chevron { transform: rotate(180deg); color: var(--green); }
+  .part-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+  }
+  .part.open .part-body { max-height: 700px; }
+  .part-inner {
+    padding: 0 24px 28px;
+    border-top: 1px solid var(--border);
+    padding-top: 24px;
+  }
+  .part-goal {
+    font-size: 14px;
+    color: rgba(0,230,118,0.7);
+    margin-bottom: 16px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .part-goal::before { content: '→'; }
+  .starter-block { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+  .starter {
+    background: rgba(255,255,255,0.04);
+    border-left: 3px solid var(--green);
+    padding: 14px 18px;
+    border-radius: 0 8px 8px 0;
+    font-size: 14px;
+    color: rgba(255,255,255,0.7);
+    font-style: italic;
+    line-height: 1.6;
+  }
+  .example {
+    background: rgba(0,230,118,0.05);
+    border: 1px dashed rgba(0,230,118,0.25);
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin-top: 16px;
+  }
+  .example-tag {
+    font-size: 10px;
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 3px;
+    color: var(--green);
+    margin-bottom: 8px;
+  }
+  .example p { font-size: 14px; color: rgba(255,255,255,0.65); font-style: italic; line-height: 1.7; }
+
+  /* ── WORD COUNT GUIDE ── */
+  .wc-bar {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    margin-bottom: 32px;
+  }
+  .wc-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 2px;
+    color: white;
+    margin-bottom: 20px;
+  }
+  .wc-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 14px;
+  }
+  .wc-label { font-size: 13px; color: var(--muted); width: 140px; flex-shrink: 0; }
+  .wc-track {
+    flex: 1;
+    height: 6px;
+    background: rgba(255,255,255,0.07);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .wc-fill { height: 100%; background: var(--green); border-radius: 3px; }
+  .wc-words { font-size: 12px; color: var(--green); font-weight: 700; min-width: 72px; text-align: right; }
+
+  /* ── CHECKLIST ── */
+  .cl-items { display: flex; flex-direction: column; gap: 8px; margin-bottom: 28px; }
+  .cl-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+  }
+  .cl-item:hover { border-color: rgba(0,230,118,0.25); }
+  .cl-item.done { background: rgba(0,230,118,0.05); border-color: rgba(0,230,118,0.3); }
+  .cl-box {
+    width: 22px; height: 22px;
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 5px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 13px;
+    color: transparent;
+    transition: all 0.2s;
+    margin-top: 1px;
+  }
+  .cl-item.done .cl-box { background: var(--green); border-color: var(--green); color: var(--bg); }
+  .cl-text { font-size: 15px; color: rgba(255,255,255,0.7); line-height: 1.45; }
+  .cl-item.done .cl-text { color: var(--muted); text-decoration: line-through; text-decoration-color: rgba(255,255,255,0.2); }
+
+  .progress-strip {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px 22px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 8px;
+  }
+  .p-track { flex: 1; height: 4px; background: rgba(255,255,255,0.07); border-radius: 2px; overflow: hidden; }
+  .p-fill { height: 100%; background: var(--green); border-radius: 2px; transition: width 0.4s ease; width: 0%; }
+  .p-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 16px;
+    letter-spacing: 1px;
+    color: var(--green);
+    min-width: 52px;
+    text-align: right;
+  }
+
+  /* ── TIPS ── */
+  .tips-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+  .tip {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px 20px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .tip:hover { border-color: rgba(0,230,118,0.3); transform: translateY(-2px); }
+  .tip-icon { font-size: 24px; margin-bottom: 10px; }
+  .tip-title { font-weight: 700; font-size: 14px; color: white; margin-bottom: 6px; }
+  .tip-body { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+  /* ── CLOSING ── */
+  .closing {
+    background: linear-gradient(135deg, var(--green) 0%, #00BFA5 100%);
+    border-radius: 16px;
+    padding: 52px 40px;
+    text-align: center;
+    color: var(--bg);
+    margin-bottom: 60px;
+  }
+  .closing h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(32px, 6vw, 56px);
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+    line-height: 1;
+  }
+  .closing p { font-size: 17px; max-width: 500px; margin: 0 auto; opacity: 0.85; line-height: 1.65; }
+
+  footer {
+    text-align: center;
+    padding: 28px 24px;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    border-top: 1px solid var(--border);
+  }
+
+  .divider { height: 1px; background: var(--border); margin: 0 24px; }
+
+  /* ── HIGHLIGHT BOX ── */
+  .callout {
+    border-left: 4px solid var(--gold);
+    background: rgba(255,214,0,0.05);
+    border-radius: 0 10px 10px 0;
+    padding: 18px 22px;
+    margin: 24px 0;
+    font-size: 15px;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.65;
+  }
+  .callout strong { color: var(--gold); }
+
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+  @media (max-width: 600px) {
+    .hero h1 { font-size: 52px; }
+    .hero-meta { gap: 10px; }
+    .part-header { padding: 16px 18px; }
+    .part-inner { padding: 18px 18px 22px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ── NAV ── -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">⚽ Speech Guide</div>
+    <ul class="nav-links">
+      <li><a href="#angle">The Angle</a></li>
+      <li><a href="#think">Think First</a></li>
+      <li><a href="#structure">Structure</a></li>
+      <li><a href="#wordcount">Word Count</a></li>
+      <li><a href="#checklist">Checklist</a></li>
+      <li><a href="#tips">Delivery</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<div class="hero container">
+  <div class="hero-eyebrow">Year 6 · Multiculturalism Speech · 4 Minutes</div>
+  <h1>
+    Welcome to<br>
+    <span class="accent">the World</span>
+    <span class="sub-accent">Cup</span>
+  </h1>
+  <p class="hero-desc">A step-by-step guide to writing a powerful, original speech about how football connects the world — and what it tells us about multiculturalism.</p>
+  <div class="hero-meta">
+    <div class="meta-pill"><span class="dot"></span> ~450–500 words</div>
+    <div class="meta-pill"><span class="dot"></span> 4 minutes speaking time</div>
+    <div class="meta-pill"><span class="dot"></span> Year 6</div>
+  </div>
+  <a href="#angle" class="hero-cta">Start writing →</a>
+</div>
+
+<!-- ── TICKER ── -->
+<div class="scoreboard">
+  <div class="scoreboard-track">
+    <span>⚽ BRAZIL · FRANCE · AUSTRALIA · JAPAN · NIGERIA · ARGENTINA · GERMANY · SOUTH KOREA · MEXICO · PORTUGAL · MOROCCO · USA · SENEGAL · COLOMBIA · SPAIN &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+    <span>⚽ BRAZIL · FRANCE · AUSTRALIA · JAPAN · NIGERIA · ARGENTINA · GERMANY · SOUTH KOREA · MEXICO · PORTUGAL · MOROCCO · USA · SENEGAL · COLOMBIA · SPAIN &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+  </div>
+</div>
+
+<!-- ── SECTION: THE ANGLE ── -->
+<section class="section" id="angle">
+  <div class="container">
+    <div class="section-eyebrow">Before You Write</div>
+    <h2 class="section-title">What's Your Angle?</h2>
+    <p class="section-intro">The World Cup is the biggest sporting event on Earth. But your speech isn't really about football — it's about what football <em>reveals</em> about multiculturalism. Here's the big idea:</p>
+
+    <div class="callout">
+      <strong>The Big Idea:</strong> For one month every four years, 5 billion people — more than half the world's population — watch the same event. Different languages, different religions, different histories. All united by one sport. The World Cup doesn't erase our differences. It puts them on full display — and that's exactly what makes it beautiful.
+    </div>
+
+    <p style="font-size:15px;color:rgba(255,255,255,0.7);margin-bottom:24px;">You can take your speech in different directions. Think about which one excites you most:</p>
+
+    <div class="think-list" style="margin-bottom:0">
+      <div class="think-item"><span class="think-q">A</span> Football as a universal language — the one thing that needs no translation</div>
+      <div class="think-item"><span class="think-q">B</span> What we learn about a country by watching how they play — their style, their passion, their identity</div>
+      <div class="think-item"><span class="think-q">C</span> What happens when fans from rival countries end up in the same crowd — and become friends anyway</div>
+      <div class="think-item"><span class="think-q">D</span> The players themselves — many grew up in two or three countries, representing the complexity of modern identity</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── SECTION: THINK FIRST ── -->
+<section class="section" id="think">
+  <div class="container">
+    <div class="section-eyebrow">Step 1</div>
+    <h2 class="section-title">Think Before You Write</h2>
+    <p class="section-intro">Grab a notebook. Answer as many of these as you can. The best speeches come from real, specific memories — not general statements.</p>
+
+    <div class="think-group">
+      <div class="think-group-label">🌍 About Football and Culture</div>
+      <div class="think-list">
+        <div class="think-item"><span class="think-q">→</span>Have you ever watched a World Cup match? Which one? What do you remember most about it?</div>
+        <div class="think-item"><span class="think-q">→</span>Do you have a team you support? Why that team — is it family, heritage, something else?</div>
+        <div class="think-item"><span class="think-q">→</span>Have you ever watched a match with people who were barracking for the other team? What was that like?</div>
+        <div class="think-item"><span class="think-q">→</span>Is there a player from another country whose story you find interesting or inspiring?</div>
+        <div class="think-item"><span class="think-q">→</span>Have you ever noticed how different countries play differently — different styles, energy, tactics?</div>
+      </div>
+    </div>
+
+    <div class="think-group">
+      <div class="think-group-label">🤔 About Multiculturalism and Sport</div>
+      <div class="think-list">
+        <div class="think-item"><span class="think-q">→</span>Why do you think billions of people care so much about a sport that's just 22 people kicking a ball?</div>
+        <div class="think-item"><span class="think-q">→</span>Many players in the World Cup represent countries they weren't even born in — what does that say about identity?</div>
+        <div class="think-item"><span class="think-q">→</span>Can you think of a moment in football history where sport brought people together across cultural divides?</div>
+        <div class="think-item"><span class="think-q">→</span>Australia's Socceroos squad has players with backgrounds from over 20 different countries — what does that tell you about us?</div>
+        <div class="think-item"><span class="think-q">→</span>What would the world look like if more things worked the way the World Cup does — everyone competing fairly, then going home?</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>Tip:</strong> Pick <strong>one specific moment</strong> — a match you watched, a player you admire, a conversation you had — and build your speech around it. Specific stories are always more powerful than general ideas.
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── SECTION: STRUCTURE ── -->
+<section class="section" id="structure">
+  <div class="container">
+    <div class="section-eyebrow">Step 2</div>
+    <h2 class="section-title">Build Your Speech — 6 Parts</h2>
+    <p class="section-intro">A 4-minute speech needs more depth than a short one. Six parts, each with a clear job to do. Click each one to open it.</p>
+
+    <div class="parts">
+
+      <div class="part" id="p1">
+        <div class="part-header" onclick="openPart('p1')">
+          <div class="part-num">01</div>
+          <div class="part-meta">
+            <div class="part-name">The Hook — Make Them Stop and Listen</div>
+            <div class="part-time">~30 seconds · 50–60 words</div>
+          </div>
+          <div class="part-chevron">▼</div>
+        </div>
+        <div class="part-body">
+          <div class="part-inner">
+            <div class="part-goal">Drop the audience into a moment — a sound, a statistic, a question — before they realise you've started</div>
+            <div class="starter-block">
+              <div class="starter">"Imagine 5 billion people — more than half of everyone alive on this planet — all watching the same 90 minutes. Different languages. Different foods on the table. Different flags on the wall. The same game."</div>
+              <div class="starter">"The last time Australia played France in the World Cup, there were fans in the same stadium who had never met anyone from the other's country. By full time, some of them were hugging."</div>
+              <div class="starter">"There is one event on Earth that can stop a war. It happened in 1914. Christmas Day. A football match, no-man's land, and two sides who had been trying to kill each other — playing together."</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="part" id="p2">
+        <div class="part-header" onclick="openPart('p2')">
+          <div class="part-num">02</div>
+          <div class="part-meta">
+            <div class="part-name">Set the Scene — What IS the World Cup?</div>
+            <div class="part-time">~40 seconds · 70–80 words</div>
+          </div>
+          <div class="part-chevron">▼</div>
+        </div>
+        <div class="part-body">
+          <div class="part-inner">
+            <div class="part-goal">Give your audience just enough context — but make it interesting, not a Wikipedia entry</div>
+            <div class="starter-block">
+              <div class="starter">Explain the scale: 32 nations, years of qualification, one trophy. Then flip to the human side: the fans who travel, the families watching from living rooms in countries too small to qualify, the players who grew up in two countries and must choose one to represent.</div>
+            </div>
+            <div class="example">
+              <div class="example-tag">Example paragraph</div>
+              <p>"The FIFA World Cup happens every four years. 32 countries qualify. Millions more don't. But on the day of the final, an estimated 5 billion people tune in — not just fans of the two teams playing, but people around the world who understand that something bigger than football is happening."</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="part" id="p3">
+        <div class="part-header" onclick="openPart('p3')">
+          <div class="part-num">03</div>
+          <div class="part-meta">
+            <div class="part-name">First Big Idea — The Language That Needs No Translation</div>
+            <div class="part-time">~60 seconds · 100–110 words</div>
+          </div>
+          <div class="part-chevron">▼</div>
+        </div>
+        <div class="part-body">
+          <div class="part-inner">
+            <div class="part-goal">Argue that football works across cultures because its rules are universal — and explore what that really means</div>
+            <p style="font-size:14px;color:var(--muted);margin-bottom:16px;">Think about: You don't need to speak the same language to understand a goal. You don't need to share the same religion to feel the same devastation when a penalty is missed. This is rare in the world — and worth exploring.</p>
+            <div class="example">
+              <div class="example-tag">Example paragraph</div>
+              <p>"I've watched matches with my [family member / friend] who speaks almost no English. But when the goal goes in, we react exactly the same way. We don't need words. Football is the one conversation that works without a translator. That's not just sport — that's a miracle of human connection."</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="part" id="p4">
+        <div class="part-header" onclick="openPart('p4')">
+          <div class="part-num">04</div>
+          <div class="part-meta">
+            <div class="part-name">Second Big Idea — What Their Game Tells You About Their Culture</div>
+            <div class="part-time">~60 seconds · 100–110 words</div>
+          </div>
+          <div class="part-chevron">▼</div>
+        </div>
+        <div class="part-body">
+          <div class="part-inner">
+            <div class="part-goal">Show how watching different countries play is actually a crash course in their culture, values and identity</div>
+            <p style="font-size:14px;color:var(--muted);margin-bottom:16px;">Think about: Brazilian football is expressive, joyful, improvised — <em>jogo bonito</em>, the beautiful game. German football is disciplined, structured, relentless. Japanese teams are known for honour — they famously cleaned their dressing room after being eliminated. These aren't accidents — they reflect something real about who these countries are.</p>
+            <div class="example">
+              <div class="example-tag">Example paragraph</div>
+              <p>"When Japan was eliminated from the 2022 World Cup, their players cleaned the entire dressing room and left an origami crane. When Morocco reached the semi-finals — the first African nation ever to do so — their players dedicated it to their mothers. These moments don't just tell you about football. They tell you about people."</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="part" id="p5">
+        <div class="part-header" onclick="openPart('p5')">
+          <div class="part-num">05</div>
+          <div class="part-meta">
+            <div class="part-name">Personal Connection — Bring It Back to You</div>
+            <div class="part-time">~40 seconds · 70–80 words</div>
+          </div>
+          <div class="part-chevron">▼</div>
+        </div>
+        <div class="part-body">
+          <div class="part-inner">
+            <div class="part-goal">Connect the big ideas to your own experience — this is what makes a speech memorable, not just informative</div>
+            <p style="font-size:14px;color:var(--muted);margin-bottom:16px;">Tell a specific story — even a small one. Who did you watch a match with? What did you feel? Which player's story resonated with you and why? You don't need a dramatic story — an honest one is enough.</p>
+            <div class="example">
+              <div class="example-tag">Example paragraph</div>
+              <p>"I remember watching [a match / the 2023 Women's World Cup in Australia] with [someone]. What stayed with me wasn't the score. It was [a specific moment — a reaction, a chant, something you noticed]. In that moment, I realised that sport was showing me something I hadn't learned in any classroom."</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="part" id="p6">
+        <div class="part-header" onclick="openPart('p6')">
+          <div class="part-num">06</div>
+          <div class="part-meta">
+            <div class="part-name">The Closing — Leave Them Thinking</div>
+            <div class="part-time">~30 seconds · 50–60 words</div>
+          </div>
+          <div class="part-chevron">▼</div>
+        </div>
+        <div class="part-body">
+          <div class="part-inner">
+            <div class="part-goal">End strong — circle back to your hook if you can, and leave the audience with one lasting idea</div>
+            <div class="starter-block">
+              <div class="starter">"The World Cup ends every four years. The flags come down. The fans go home. But something stays — a little bit more understanding, a little more curiosity, a little less fear of the unfamiliar. That's not just sport. That's multiculturalism in action."</div>
+              <div class="starter">"Five billion people watching together. Different languages, different flags, different histories — all holding their breath at the same moment. Maybe the World Cup doesn't just show us how different we are. Maybe it shows us how much we have in common."</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── WORD COUNT ── -->
+<section class="section" id="wordcount">
+  <div class="container">
+    <div class="section-eyebrow">Step 3</div>
+    <h2 class="section-title">Word Count by Part</h2>
+    <p class="section-intro">4 minutes = roughly 450–500 words spoken at a clear, confident pace. Here's how to spread them across your speech.</p>
+
+    <div class="wc-bar">
+      <div class="wc-title">Target Word Count Per Part</div>
+      <div class="wc-row"><div class="wc-label">01 · Hook</div><div class="wc-track"><div class="wc-fill" style="width:12%"></div></div><div class="wc-words">~55 words</div></div>
+      <div class="wc-row"><div class="wc-label">02 · Set the Scene</div><div class="wc-track"><div class="wc-fill" style="width:16%"></div></div><div class="wc-words">~75 words</div></div>
+      <div class="wc-row"><div class="wc-label">03 · First Big Idea</div><div class="wc-track"><div class="wc-fill" style="width:22%"></div></div><div class="wc-words">~105 words</div></div>
+      <div class="wc-row"><div class="wc-label">04 · Second Big Idea</div><div class="wc-track"><div class="wc-fill" style="width:22%"></div></div><div class="wc-words">~105 words</div></div>
+      <div class="wc-row"><div class="wc-label">05 · Personal Story</div><div class="wc-track"><div class="wc-fill" style="width:16%"></div></div><div class="wc-words">~75 words</div></div>
+      <div class="wc-row"><div class="wc-label">06 · Closing</div><div class="wc-track"><div class="wc-fill" style="width:12%"></div></div><div class="wc-words">~55 words</div></div>
+    </div>
+
+    <div class="callout">
+      <strong>Remember:</strong> These are targets, not rules. If your personal story needs more space, give it more. If your hook is landing perfectly at 40 words, don't pad it. Read the whole thing out loud and time it — that's the only real test.
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── CHECKLIST ── -->
+<section class="section" id="checklist">
+  <div class="container">
+    <div class="section-eyebrow">Step 4</div>
+    <h2 class="section-title">Draft Checklist</h2>
+    <p class="section-intro">Once you've written your draft, go through these. Tick each one honestly.</p>
+
+    <div class="progress-strip">
+      <div class="p-track"><div class="p-fill" id="pfill"></div></div>
+      <div class="p-label" id="plabel">0 / 9</div>
+    </div>
+
+    <div class="cl-items">
+      <div class="cl-item" onclick="tick(this)"><div class="cl-box">✓</div><div class="cl-text">My opening sentence creates a strong image or feeling before I've explained anything</div></div>
+      <div class="cl-item" onclick="tick(this)"><div class="cl-box">✓</div><div class="cl-text">I've used at least one real, specific fact (a statistic, a country, a player, a moment)</div></div>
+      <div class="cl-item" onclick="tick(this)"><div class="cl-box">✓</div><div class="cl-text">My first big idea is clearly argued — not just described</div></div>
+      <div class="cl-item" onclick="tick(this)"><div class="cl-box">✓</div><div class="cl-text">My second big idea adds something NEW — not just repeating the first point</div></div>
+      <div class="cl-item" onclick="tick(this)"><div class="cl-box">✓</div><div class="cl-text">I've included a personal connection or story — something that is genuinely mine</div></div>
+      <div class="cl-item" onclick="tick(this)"><div class="cl-box">✓</div><div class="cl-text">My closing ties back to my opening or leaves a clear final thought</div></div>
+      <div class="cl-item" onclick="tick(this)"><div class="cl-box">✓</div><div class="cl-text">I've read it out loud and it runs 3.5 to 4.5 minutes</div></div>
+      <div class="cl-item" onclick="tick(this)"><div class="cl-box">✓</div><div class="cl-text">There are no sentences so long that I run out of breath saying them</div></div>
+      <div class="cl-item" onclick="tick(this)"><div class="cl-box">✓</div><div class="cl-text">It sounds like me — not like an encyclopedia article</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── TIPS ── -->
+<section class="section" id="tips">
+  <div class="container">
+    <div class="section-eyebrow">Step 5</div>
+    <h2 class="section-title">Delivering It Well</h2>
+    <p class="section-intro">The writing gets you 60% of the way there. The delivery is the other 40%.</p>
+
+    <div class="tips-grid">
+      <div class="tip"><div class="tip-icon">⏱️</div><div class="tip-title">Pace yourself early</div><div class="tip-body">The first 30 seconds determine everything. Go slower than feels comfortable — your nerves will naturally speed you up.</div></div>
+      <div class="tip"><div class="tip-icon">👁️</div><div class="tip-title">Pick three people</div><div class="tip-body">Find three friendly faces in the room and rotate eye contact between them. It looks natural and keeps you grounded.</div></div>
+      <div class="tip"><div class="tip-icon">⏸️</div><div class="tip-title">Use silence</div><div class="tip-body">After a powerful sentence, pause for two seconds. Silence is not failure — it's emphasis. It makes the line land harder.</div></div>
+      <div class="tip"><div class="tip-icon">📝</div><div class="tip-title">Know your opening cold</div><div class="tip-body">Memorise just the first two sentences. Starting without looking down builds instant confidence and credibility.</div></div>
+      <div class="tip"><div class="tip-icon">💪</div><div class="tip-title">Stand tall</div><div class="tip-body">Feet shoulder-width apart, weight evenly distributed. Your body language tells the audience whether to trust you before you say a word.</div></div>
+      <div class="tip"><div class="tip-icon">🎯</div><div class="tip-title">Own your personal story</div><div class="tip-body">The part about YOU is the only part no one else can give this speech. Slow down there — that's the part worth hearing.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CLOSING ── -->
+<div class="container">
+  <div class="closing section">
+    <h2>The Whistle Blows.<br>You're Ready.</h2>
+    <p>Five billion people find a way to care about the same thing at the same time. That's what you're writing about. Now go tell that story — in your words, your voice, your way.</p>
+  </div>
+</div>
+
+<footer>Year 6 · Multiculturalism Speech · Welcome to the World Cup · ⚽</footer>
+
+</div>
+
+<script>
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.section').forEach(s => obs.observe(s));
+
+  function openPart(id) {
+    const el = document.getElementById(id);
+    const isOpen = el.classList.contains('open');
+    document.querySelectorAll('.part').forEach(p => p.classList.remove('open'));
+    if (!isOpen) el.classList.add('open');
+  }
+
+  function tick(item) {
+    item.classList.toggle('done');
+    const all = document.querySelectorAll('.cl-item');
+    const done = document.querySelectorAll('.cl-item.done');
+    const pct = Math.round((done.length / all.length) * 100);
+    document.getElementById('pfill').style.width = pct + '%';
+    document.getElementById('plabel').textContent = done.length + ' / ' + all.length;
+  }
+</script>
+</body>
+</html>
